@@ -1,4 +1,5 @@
 import 'package:du_an_iot/homeScreen.dart';
+import 'package:du_an_iot/voitest.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -82,10 +83,10 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
-                    // Navigator.push(context,
-                    //       MaterialPageRoute(builder: (context) => TestPage()));
+                      // Navigator.push(context,
+                          // MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => VoiceHome()));
                     },
                     color: Colors.red,
                     shape: RoundedRectangleBorder(
