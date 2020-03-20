@@ -18,6 +18,7 @@ class _VoiceHomeState extends State<VoiceHome> {
     super.initState();
     initSpeechRecognizer();
   }
+  
 
   void initSpeechRecognizer() {
     _speechRecognition = SpeechRecognition();
@@ -75,8 +76,8 @@ class _VoiceHomeState extends State<VoiceHome> {
                   onPressed: () {
                     if (_isAvailable && !_isListening)
                       _speechRecognition
-                          // .listen(locale: "en_US")
-                          .listen(locale: "vi_VN")
+                          .listen(locale: "en_US")
+                          // .listen(locale: "vi_VN")
                           .then((result) => print('$result'));
                           // print(_speechRecognition.getLanguages);
                   },

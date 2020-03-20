@@ -1,5 +1,4 @@
 import 'package:du_an_iot/homeScreen.dart';
-import 'package:du_an_iot/voitest.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,6 +7,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                       // Navigator.push(context,
                           // MaterialPageRoute(builder: (context) => HomePage()));
                     Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => VoiceHome()));
+                          MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     color: Colors.red,
                     shape: RoundedRectangleBorder(
