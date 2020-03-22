@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
@@ -7,27 +10,42 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final DbFirebase = FirebaseDatabase.instance.reference();
+
   SpeechRecognition _speechRecognition;
   bool _isAvailable = false;
   bool _isListening = false;
 
   String resultText = "";
 
-  bool cuaNha = true;
-  bool denKhach = true;
-  bool denNgu = true;
-  bool denBep = true;
-  bool denTam = true;
-  bool quatKhach = true;
-  bool quatNgu = true;
-  bool quatBep = true;
-  bool quatTam = true;
+  String nhietDo = '100C';
+  String doAm = '200';
+  String khiGas = '300';
+
+  bool denTong = false;
+  bool quatTong = false;
+  bool cuaNha = false;
+  bool quanAo = false;
+  bool denKhach = false;
+  bool denNgu = false;
+  bool denBep = false;
+  bool denTam = false;
+  bool quatKhach = false;
+  bool quatNgu = false;
+  bool quatBep = false;
+  // bool quatTam = false;
 
   var setAppBar = Text("Home");
   Icon setIcon = Icon(Icons.keyboard_voice);
 
+  String batDenTong = 'assets/lightallon.png';
+  String tatDenTong = 'assets/lightalloff.png';
+  String batQuatTong = 'assets/fanallon.png';
+  String tatQuatTong = 'assets/fanalloff.png';
   String moCua = 'assets/opendoor.png';
   String dongCua = 'assets/closeddoor.png';
+  String phoiDo = 'assets/phoi.png';
+  String thuDo = 'assets/thu.png';
 
   String batDenKhach = 'assets/lighton.png';
   String tatDenKhach = 'assets/lightoff.png';
@@ -44,11 +62,17 @@ class _HomePageState extends State<HomePage> {
   String tatQuatNgu = 'assets/fanoff.png';
   String batQuatBep = 'assets/fanon.png';
   String tatQuatBep = 'assets/fanoff.png';
-  String batQuatTam = 'assets/fanon.png';
-  String tatQuatTam = 'assets/fanoff.png';
+  // String batQuatTam = 'assets/fanon.png';
+  // String tatQuatTam = 'assets/fanoff.png';
 
+  String denTongBat = 'Bật tất cả đèn';
+  String denTongTat = 'Tắt tất cả đèn';
+  String quatTongBat = 'Bật tất cả quạt';
+  String quatTongTat = 'Tắt tất cả quạt';
   String cuaMo = 'Mở cửa';
   String cuaDong = 'Đóng cửa';
+  String doPhoi = 'Phơi quần áo';
+  String doThu = 'Thu quần áo';
 
   String denKhachBat = 'Bật đèn';
   String denKhachTat = 'Tắt đèn';
@@ -65,13 +89,14 @@ class _HomePageState extends State<HomePage> {
   String quatNguTat = 'Tắt quạt';
   String quatBepBat = 'Bật quạt';
   String quatBepTat = 'Tắt quạt';
-  String quatTamBat = 'Bật quạt';
-  String quatTamTat = 'Tắt quạt';
+  // String quatTamBat = 'Bật quạt';
+  // String quatTamTat = 'Tắt quạt';
 
   @override
   void initState() {
     super.initState();
     initSpeechRecognizer();
+    readFirebase();
   }
 
   void initSpeechRecognizer() {
@@ -112,57 +137,164 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void vDenTong() {
+    setState(() {
+      denTong = !denTong;
+      if (denTong == true) {
+        denKhach = true;
+        denNgu = true;
+        denBep = true;
+        denTam = true;
+        updateFirebase();
+      } else {
+        denKhach = false;
+        denNgu = false;
+        denBep = false;
+        denTam = false;
+        updateFirebase();
+      }
+    });
+  }
+
+  void vQuatTong() {
+    setState(() {
+      quatTong = !quatTong;
+      if (quatTong == true) {
+        quatKhach = true;
+        quatNgu = true;
+        quatBep = true;
+        updateFirebase();
+      } else {
+        quatKhach = false;
+        quatNgu = false;
+        quatBep = false;
+        updateFirebase();
+      }
+    });
+  }
+
   void vCuaNha() {
     setState(() {
       cuaNha = !cuaNha;
+      updateFirebase();
+    });
+  }
+
+  void vQuanAo() {
+    setState(() {
+      quanAo = !quanAo;
+      updateFirebase();
     });
   }
 
   void vDenKhach() {
     setState(() {
       denKhach = !denKhach;
+      updateFirebase();
     });
   }
 
   void vQuatKhach() {
     setState(() {
       quatKhach = !quatKhach;
+
+      updateFirebase();
     });
   }
 
   void vDenNgu() {
     setState(() {
       denNgu = !denNgu;
+      updateFirebase();
     });
   }
 
   void vQuatNgu() {
     setState(() {
       quatNgu = !quatNgu;
+      updateFirebase();
     });
   }
 
   void vDenBep() {
     setState(() {
       denBep = !denBep;
+      updateFirebase();
     });
   }
 
   void vQuatBep() {
     setState(() {
       quatBep = !quatBep;
+      updateFirebase();
     });
   }
 
   void vDenTam() {
     setState(() {
       denTam = !denTam;
+      updateFirebase();
     });
   }
 
-  void vQuatTam() {
-    setState(() {
-      quatTam = !quatTam;
+  void updateFirebase() {
+    // sân nhà - gara
+    if (cuaNha == true) {
+      DbFirebase.update({'CUA_NHA': '1'});
+    } else {
+      DbFirebase.update({'CUA_NHA': '0'});
+    }
+    if (quanAo == true) {
+      DbFirebase.update({'PHOI_QUAN_AO': '1'});
+    } else {
+      DbFirebase.update({'PHOI_QUAN_AO': '0'});
+    }
+    // phòng khách
+    if (denKhach == true) {
+      DbFirebase.update({'DEN_PHONG_KHACH': '1'});
+    } else {
+      DbFirebase.update({'DEN_PHONG_KHACH': '0'});
+    }
+    if (quatKhach == true) {
+      DbFirebase.update({'QUAT_PHONG_KHACH': '1'});
+    } else {
+      DbFirebase.update({'QUAT_PHONG_KHACH': '0'});
+    }
+    // phòng ngủ
+    if (denNgu == true) {
+      DbFirebase.update({'DEN_PHONG_NGU': '1'});
+    } else {
+      DbFirebase.update({'DEN_PHONG_NGU': '0'});
+    }
+    if (quatNgu == true) {
+      DbFirebase.update({'QUAT_PHONG_NGU': '1'});
+    } else {
+      DbFirebase.update({'QUAT_PHONG_NGU': '0'});
+    }
+    // phòng bếp
+    if (denBep == true) {
+      DbFirebase.update({'DEN_PHONG_BEP': '1'});
+    } else {
+      DbFirebase.update({'DEN_PHONG_BEP': '0'});
+    }
+    if (quatBep == true) {
+      DbFirebase.update({'QUAT_PHONG_BEP': '1'});
+    } else {
+      DbFirebase.update({'QUAT_PHONG_BEP': '0'});
+    }
+    // phòng tắm
+    if (denTam == true) {
+      DbFirebase.update({'DEN_PHONG_TAM': '1'});
+    } else {
+      DbFirebase.update({'DEN_PHONG_TAM': '0'});
+    }
+  }
+
+  void readFirebase() {
+    DbFirebase.once().then((DataSnapshot dataSnapshot) {
+      // var data = json.decode(dataSnapshot.value);
+      // print(data);
+      print(dataSnapshot.value);
     });
   }
 
@@ -175,24 +307,38 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: setIcon,
             onPressed: () {
-              setState(() {
-                if (this.setIcon.icon == Icons.keyboard_voice) {
-                  this.setIcon = Icon(Icons.cancel);
-                  this.setAppBar = Text(
-                    resultText,
-                    style: TextStyle(color: Colors.white, fontSize: 16.0),
-                  );
+              setState(
+                () {
+                  if (this.setIcon.icon == Icons.keyboard_voice) {
+                    this.setIcon = Icon(Icons.cancel);
+                    this.setAppBar = Text(
+                      resultText,
+                      style: TextStyle(color: Colors.white, fontSize: 16.0),
+                    );
 
-                  if (_isAvailable && !_isListening)
-                    _speechRecognition
-                        .listen(locale: "en_US")
-                        // .listen(locale: "vi_VN")
-                        .then((result) => print('$result'));
-                } else {
-                  this.setIcon = Icon(Icons.keyboard_voice);
-                  this.setAppBar = Text("Home");
-                }
-              });
+                    if (_isAvailable && !_isListening)
+                      _speechRecognition
+                          .listen(locale: "en_US")
+                          // .listen(locale: "vi_VN")
+                          .then(
+                            (result) => print('day la $result'),
+                          );
+                  } else {
+                    this.setIcon = Icon(Icons.keyboard_voice);
+                    this.setAppBar = Text("Home");
+
+                    if (_isListening)
+                      _speechRecognition.cancel().then(
+                            (result) => setState(
+                              () {
+                                _isListening = result;
+                                print('stop voice');
+                              },
+                            ),
+                          );
+                  }
+                },
+              );
             },
           )
         ],
@@ -260,7 +406,9 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        vDenTong();
+                      },
                       splashColor: Colors.red,
                       child: Center(
                           child: Column(
@@ -269,11 +417,11 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                             child: Image.asset(
-                                quatKhach ? batDenKhach : tatDenKhach,
+                                denTong ? batDenTong : tatDenTong,
                                 width: 50),
                           ),
                           Text(
-                            quatKhach ? denKhachBat : denKhachTat,
+                            denTong ? denTongBat : denTongTat,
                             style: TextStyle(fontSize: 15),
                           )
                         ],
@@ -285,7 +433,9 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        vQuatTong();
+                      },
                       splashColor: Colors.red,
                       child: Center(
                           child: Column(
@@ -294,11 +444,11 @@ class _HomePageState extends State<HomePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
                             child: Image.asset(
-                                quatKhach ? batQuatKhach : tatQuatKhach,
+                                quatTong ? batQuatTong : tatQuatTong,
                                 width: 50),
                           ),
                           Text(
-                            quatKhach ? quatKhachBat : quatKhachTat,
+                            quatTong ? quatTongBat : quatTongTat,
                             style: TextStyle(fontSize: 15),
                           )
                         ],
@@ -306,6 +456,234 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Card(
+              margin: EdgeInsets.fromLTRB(13, 10, 13, 0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Container(
+                width: double.infinity,
+                height: 120,
+                color: Colors.white12,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text('Sân nhà - Gara',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Text('Đèn ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(denKhach ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text('Quạt ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(quatKhach ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text('Phòng khách',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Text('Đèn ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(denKhach ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text('Quạt ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(quatKhach ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text('Phòng ngủ',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold)),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text('Đèn ',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      )),
+                                  Text(denNgu ? "Bật" : "Tắt",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green)),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Text('Quạt ',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      )),
+                                  Text(quatNgu ? "Bật" : "Tắt",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green)),
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text('Phòng bếp',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Text('Đèn ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(denBep ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text('Quạt ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(quatBep ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text('Phòng tắm',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Text('Đèn ',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text(denTam ? "Bật" : "Tắt",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text('',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                    Text("",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Card(
@@ -327,7 +705,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 15,
                             )),
-                        Text('100*C',
+                        Text(nhietDo,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -338,11 +716,22 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text('Độ ẩm', style: TextStyle(fontSize: 15)),
-                        Text('100',
+                        Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blueAccent))
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text('Khí gas', style: TextStyle(fontSize: 15)),
+                        Text(khiGas,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple))
                       ],
                     ),
                   ],
@@ -403,11 +792,11 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Image.asset(cuaNha ? dongCua : moCua,
+                            child: Image.asset(cuaNha ? moCua : dongCua,
                                 width: 50),
                           ),
                           Text(
-                            cuaNha ? cuaDong : cuaMo,
+                            cuaNha ? cuaMo : cuaDong,
                             style: TextStyle(fontSize: 15),
                           )
                         ],
@@ -419,7 +808,9 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        vQuanAo();
+                      },
                       splashColor: Colors.red,
                       child: Center(
                           child: Column(
@@ -427,12 +818,11 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                            child: Image.asset(
-                                quatKhach ? batQuatKhach : tatQuatKhach,
-                                width: 50),
+                            child:
+                                Image.asset(quanAo ? phoiDo : thuDo, width: 50),
                           ),
                           Text(
-                            quatKhach ? quatKhachBat : quatKhachTat,
+                            quanAo ? doPhoi : doThu,
                             style: TextStyle(fontSize: 15),
                           )
                         ],
@@ -440,47 +830,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
-              ),
-            ),
-            Card(
-              margin: EdgeInsets.fromLTRB(13, 10, 13, 0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Container(
-                width: double.infinity,
-                height: 100,
-                color: Colors.white12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text('Nhiệt độ',
-                            style: TextStyle(
-                              fontSize: 15,
-                            )),
-                        Text('100*C',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.redAccent))
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text('Độ ẩm', style: TextStyle(fontSize: 15)),
-                        Text('100',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueAccent))
-                      ],
-                    ),
-                  ],
-                ),
               ),
             ),
             const SizedBox(height: 20.0),
@@ -598,7 +947,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 15,
                             )),
-                        Text('100*C',
+                        Text(nhietDo,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -609,7 +958,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text('Độ ẩm', style: TextStyle(fontSize: 15)),
-                        Text('100',
+                        Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -734,7 +1083,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 15,
                             )),
-                        Text('100*C',
+                        Text(nhietDo,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -745,7 +1094,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text('Độ ẩm', style: TextStyle(fontSize: 15)),
-                        Text('100',
+                        Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -870,7 +1219,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 15,
                             )),
-                        Text('100*C',
+                        Text(nhietDo,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -881,11 +1230,22 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text('Độ ẩm', style: TextStyle(fontSize: 15)),
-                        Text('100',
+                        Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blueAccent))
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text('Khí gas', style: TextStyle(fontSize: 15)),
+                        Text(khiGas,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple))
                       ],
                     ),
                   ],
@@ -924,67 +1284,34 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Divider(),
-            Padding(
+            Container(
               padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                // physics: (),
-                children: <Widget>[
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        vDenTam();
-                      },
-                      splashColor: Colors.red,
-                      child: Center(
-                          child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Image.asset(denTam ? batDenTam : tatDenTam,
-                                width: 50),
-                          ),
-                          Text(
-                            denTam ? denTamBat : denTamTat,
-                            style: TextStyle(fontSize: 15),
-                          )
-                        ],
-                      )),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        vQuatTam();
-                      },
-                      splashColor: Colors.red,
-                      child: Center(
-                          child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                            child: Image.asset(
-                                quatTam ? batQuatTam : tatQuatTam,
-                                width: 50),
-                          ),
-                          Text(
-                            quatTam ? quatTamBat : quatTamTat,
-                            style: TextStyle(fontSize: 15),
-                          )
-                        ],
-                      )),
-                    ),
-                  ),
-                ],
+              height: 150,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    vDenTam();
+                  },
+                  splashColor: Colors.red,
+                  child: Center(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Image.asset(denTam ? batDenTam : tatDenTam,
+                            width: 50),
+                      ),
+                      Text(
+                        denTam ? denTamBat : denTamTat,
+                        style: TextStyle(fontSize: 15),
+                      )
+                    ],
+                  )),
+                ),
               ),
             ),
             Card(
@@ -1006,7 +1333,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 15,
                             )),
-                        Text('100*C',
+                        Text(nhietDo,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -1017,7 +1344,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text('Độ ẩm', style: TextStyle(fontSize: 15)),
-                        Text('100',
+                        Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
