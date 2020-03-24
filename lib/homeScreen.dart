@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_recognition/speech_recognition.dart';
@@ -10,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final DbFirebase = FirebaseDatabase.instance.reference();
+  // final FirebaseDatabase.instance.reference() = FirebaseDatabase.instance.reference();
 
   SpeechRecognition _speechRecognition;
   bool _isAvailable = false;
@@ -18,12 +17,21 @@ class _HomePageState extends State<HomePage> {
 
   String resultText = "";
 
-  String nhietDo = '100C';
-  String doAm = '200';
-  String khiGas = '300';
+  String nhietDo = "";
+  String doAm = "";
+  String ttCuaNha = "";
+  String ttQuanAo = "";
+  String khiGas = "";
+  String ttDenKhach = "";
+  String ttQuatKhach = "";
+  String ttDenNgu = "";
+  String ttQuatNgu = "";
+  String ttDenBep = "";
+  String ttQuatBep = "";
+  String ttDenTam = "";
 
-  bool denTong = false;
-  bool quatTong = false;
+  // bool denTong = false;
+  // bool quatTong = false;
   bool cuaNha = false;
   bool quanAo = false;
   bool denKhach = false;
@@ -38,10 +46,10 @@ class _HomePageState extends State<HomePage> {
   var setAppBar = Text("Home");
   Icon setIcon = Icon(Icons.keyboard_voice);
 
-  String batDenTong = 'assets/lightallon.png';
-  String tatDenTong = 'assets/lightalloff.png';
-  String batQuatTong = 'assets/fanallon.png';
-  String tatQuatTong = 'assets/fanalloff.png';
+  // String batDenTong = 'assets/lightallon.png';
+  // String tatDenTong = 'assets/lightalloff.png';
+  // String batQuatTong = 'assets/fanallon.png';
+  // String tatQuatTong = 'assets/fanalloff.png';
   String moCua = 'assets/opendoor.png';
   String dongCua = 'assets/closeddoor.png';
   String phoiDo = 'assets/phoi.png';
@@ -65,10 +73,10 @@ class _HomePageState extends State<HomePage> {
   // String batQuatTam = 'assets/fanon.png';
   // String tatQuatTam = 'assets/fanoff.png';
 
-  String denTongBat = 'Bật tất cả đèn';
-  String denTongTat = 'Tắt tất cả đèn';
-  String quatTongBat = 'Bật tất cả quạt';
-  String quatTongTat = 'Tắt tất cả quạt';
+  // String denTongBat = 'Bật tất cả đèn';
+  // String denTongTat = 'Tắt tất cả đèn';
+  // String quatTongBat = 'Bật tất cả quạt';
+  // String quatTongTat = 'Tắt tất cả quạt';
   String cuaMo = 'Mở cửa';
   String cuaDong = 'Đóng cửa';
   String doPhoi = 'Phơi quần áo';
@@ -93,10 +101,16 @@ class _HomePageState extends State<HomePage> {
   // String quatTamTat = 'Tắt quạt';
 
   @override
-  void initState() {
-    super.initState();
-    initSpeechRecognizer();
-    readFirebase();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {
+      wTrangThaiChung();
+      wPhongKhach();
+      wPhongNgu();
+      wPhongBep();
+      wPhongTam();
+      wSanNhaGara();
+    });
   }
 
   void initSpeechRecognizer() {
@@ -126,8 +140,9 @@ class _HomePageState extends State<HomePage> {
   void batTatVoice() {
     setState(() {
       switch (resultText.toString()) {
-        case 'open':
-          // phongKhach = true;
+        case 'Open One':
+          denKhach = true;
+          print('thành công');
           break;
         case 'close':
           // phongKhach = false;
@@ -137,46 +152,51 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void vDenTong() {
-    setState(() {
-      denTong = !denTong;
-      if (denTong == true) {
-        denKhach = true;
-        denNgu = true;
-        denBep = true;
-        denTam = true;
-        updateFirebase();
-      } else {
-        denKhach = false;
-        denNgu = false;
-        denBep = false;
-        denTam = false;
-        updateFirebase();
-      }
-    });
-  }
+  // void vDenTong() {
+  //   setState(() {
+  //     denTong = !denTong;
+  //     if (denTong == true) {
+  //       denKhach = true;
+  //       denNgu = true;
+  //       denBep = true;
+  //       denTam = true;
+  //       updateFirebase();
+  //       // updateState();
+  //     } else {
+  //       denKhach = false;
+  //       denNgu = false;
+  //       denBep = false;
+  //       denTam = false;
+  //       updateFirebase();
+  //       // updateState();
+  //     }
+  //   });
+  // }
 
-  void vQuatTong() {
-    setState(() {
-      quatTong = !quatTong;
-      if (quatTong == true) {
-        quatKhach = true;
-        quatNgu = true;
-        quatBep = true;
-        updateFirebase();
-      } else {
-        quatKhach = false;
-        quatNgu = false;
-        quatBep = false;
-        updateFirebase();
-      }
-    });
-  }
+  // void vQuatTong() {
+  //   setState(() {
+  //     quatTong = !quatTong;
+  //     if (quatTong == true) {
+  //       quatKhach = true;
+  //       quatNgu = true;
+  //       quatBep = true;
+  //       updateFirebase();
+  //       // updateState();
+  //     } else {
+  //       quatKhach = false;
+  //       quatNgu = false;
+  //       quatBep = false;
+  //       updateFirebase();
+  //       // updateState();
+  //     }
+  //   });
+  // }
 
   void vCuaNha() {
     setState(() {
       cuaNha = !cuaNha;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -184,6 +204,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       quanAo = !quanAo;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -191,6 +212,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denKhach = !denKhach;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -199,6 +221,7 @@ class _HomePageState extends State<HomePage> {
       quatKhach = !quatKhach;
 
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -206,6 +229,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denNgu = !denNgu;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -213,6 +237,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       quatNgu = !quatNgu;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -220,6 +245,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denBep = !denBep;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -227,6 +253,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       quatBep = !quatBep;
       updateFirebase();
+      // updateState();
     });
   }
 
@@ -234,67 +261,147 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denTam = !denTam;
       updateFirebase();
+      // updateState();
     });
+  }
+
+  void updateState() {
+    // sân nhà - gara
+    if (ttCuaNha == "1") {
+      cuaNha = true;
+    } else {
+      cuaNha = false;
+    }
+    if (ttQuanAo == "1") {
+      quanAo = true;
+    } else {
+      quanAo = false;
+    }
+    // phòng khách
+    if (ttDenKhach == "1") {
+      denKhach = true;
+    } else {
+      denKhach = false;
+    }
+    if (ttQuatKhach == "1") {
+      quatKhach = true;
+    } else {
+      quatKhach = false;
+    }
+    // phòng ngủ
+    if (ttDenNgu == "1") {
+      denNgu = true;
+    } else {
+      denNgu = false;
+    }
+    if (ttQuatNgu == "1") {
+      quatNgu = true;
+    } else {
+      quatNgu = false;
+    }
+    // phòng bếp
+    if (ttDenBep == "1") {
+      denBep = true;
+    } else {
+      denBep = false;
+    }
+    if (ttQuatBep == "1") {
+      quatBep = true;
+    } else {
+      quatBep = false;
+    }
+    // phòng tắm
+    if (ttDenTam == "1") {
+      denTam = true;
+    } else {
+      denTam = false;
+    }
   }
 
   void updateFirebase() {
     // sân nhà - gara
     if (cuaNha == true) {
-      DbFirebase.update({'CUA_NHA': '1'});
+      FirebaseDatabase.instance.reference().update({'CUA_NHA': '1'});
     } else {
-      DbFirebase.update({'CUA_NHA': '0'});
+      FirebaseDatabase.instance.reference().update({'CUA_NHA': '0'});
     }
     if (quanAo == true) {
-      DbFirebase.update({'PHOI_QUAN_AO': '1'});
+      FirebaseDatabase.instance.reference().update({'PHOI_QUAN_AO': '1'});
     } else {
-      DbFirebase.update({'PHOI_QUAN_AO': '0'});
+      FirebaseDatabase.instance.reference().update({'PHOI_QUAN_AO': '0'});
     }
     // phòng khách
     if (denKhach == true) {
-      DbFirebase.update({'DEN_PHONG_KHACH': '1'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_KHACH': '1'});
     } else {
-      DbFirebase.update({'DEN_PHONG_KHACH': '0'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_KHACH': '0'});
     }
     if (quatKhach == true) {
-      DbFirebase.update({'QUAT_PHONG_KHACH': '1'});
+      FirebaseDatabase.instance.reference().update({'QUAT_PHONG_KHACH': '1'});
     } else {
-      DbFirebase.update({'QUAT_PHONG_KHACH': '0'});
+      FirebaseDatabase.instance.reference().update({'QUAT_PHONG_KHACH': '0'});
     }
     // phòng ngủ
     if (denNgu == true) {
-      DbFirebase.update({'DEN_PHONG_NGU': '1'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_NGU': '1'});
     } else {
-      DbFirebase.update({'DEN_PHONG_NGU': '0'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_NGU': '0'});
     }
     if (quatNgu == true) {
-      DbFirebase.update({'QUAT_PHONG_NGU': '1'});
+      FirebaseDatabase.instance.reference().update({'QUAT_PHONG_NGU': '1'});
     } else {
-      DbFirebase.update({'QUAT_PHONG_NGU': '0'});
+      FirebaseDatabase.instance.reference().update({'QUAT_PHONG_NGU': '0'});
     }
     // phòng bếp
     if (denBep == true) {
-      DbFirebase.update({'DEN_PHONG_BEP': '1'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_BEP': '1'});
     } else {
-      DbFirebase.update({'DEN_PHONG_BEP': '0'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_BEP': '0'});
     }
     if (quatBep == true) {
-      DbFirebase.update({'QUAT_PHONG_BEP': '1'});
+      FirebaseDatabase.instance.reference().update({'QUAT_PHONG_BEP': '1'});
     } else {
-      DbFirebase.update({'QUAT_PHONG_BEP': '0'});
+      FirebaseDatabase.instance.reference().update({'QUAT_PHONG_BEP': '0'});
     }
     // phòng tắm
     if (denTam == true) {
-      DbFirebase.update({'DEN_PHONG_TAM': '1'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_TAM': '1'});
     } else {
-      DbFirebase.update({'DEN_PHONG_TAM': '0'});
+      FirebaseDatabase.instance.reference().update({'DEN_PHONG_TAM': '0'});
     }
   }
 
   void readFirebase() {
-    DbFirebase.once().then((DataSnapshot dataSnapshot) {
-      // var data = json.decode(dataSnapshot.value);
-      // print(data);
+    FirebaseDatabase.instance
+        .reference()
+        .once()
+        .then((DataSnapshot dataSnapshot) {
       print(dataSnapshot.value);
+      setState(() {
+        nhietDo = dataSnapshot.value["NHIET_DO"].toString();
+        doAm = dataSnapshot.value["DO_AM"].toString();
+        khiGas = dataSnapshot.value["KHI_GAS"].toString();
+
+        ttCuaNha = dataSnapshot.value["CUA_NHA"].toString();
+        ttQuanAo = dataSnapshot.value["PHOI_QUAN_AO"].toString();
+        ttDenKhach = dataSnapshot.value["DEN_PHONG_KHACH"].toString();
+        ttQuatKhach = dataSnapshot.value["QUAT_PHONG_KHACH"].toString();
+        ttDenNgu = dataSnapshot.value["DEN_PHONG_NGU"].toString();
+        ttQuatNgu = dataSnapshot.value["QUAT_PHONG_NGU"].toString();
+        ttDenBep = dataSnapshot.value["DEN_PHONG_BEP"].toString();
+        ttQuatBep = dataSnapshot.value["QUAT_PHONG_BEP"].toString();
+        ttDenTam = dataSnapshot.value["DEN_PHONG_TAM"].toString();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeechRecognizer();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      readFirebase();
+      updateState();
     });
   }
 
@@ -315,6 +422,7 @@ class _HomePageState extends State<HomePage> {
                       resultText,
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                     );
+                    print("day la ssssssssss "+resultText.toString());
 
                     if (_isAvailable && !_isListening)
                       _speechRecognition
@@ -394,70 +502,70 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Divider(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                // physics: AlwaysScrollableScrollPhysics(),
-                children: <Widget>[
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        vDenTong();
-                      },
-                      splashColor: Colors.red,
-                      child: Center(
-                          child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                            child: Image.asset(
-                                denTong ? batDenTong : tatDenTong,
-                                width: 50),
-                          ),
-                          Text(
-                            denTong ? denTongBat : denTongTat,
-                            style: TextStyle(fontSize: 15),
-                          )
-                        ],
-                      )),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        vQuatTong();
-                      },
-                      splashColor: Colors.red,
-                      child: Center(
-                          child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                            child: Image.asset(
-                                quatTong ? batQuatTong : tatQuatTong,
-                                width: 50),
-                          ),
-                          Text(
-                            quatTong ? quatTongBat : quatTongTat,
-                            style: TextStyle(fontSize: 15),
-                          )
-                        ],
-                      )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+            //   child: GridView.count(
+            //     shrinkWrap: true,
+            //     crossAxisCount: 2,
+            //     // physics: AlwaysScrollableScrollPhysics(),
+            //     children: <Widget>[
+            //       Card(
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(15.0),
+            //         ),
+            //         child: InkWell(
+            //           onTap: () {
+            //             vDenTong();
+            //           },
+            //           splashColor: Colors.red,
+            //           child: Center(
+            //               child: Column(
+            //             mainAxisSize: MainAxisSize.min,
+            //             children: <Widget>[
+            //               Padding(
+            //                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+            //                 child: Image.asset(
+            //                     denTong ? batDenTong : tatDenTong,
+            //                     width: 50),
+            //               ),
+            //               Text(
+            //                 denTong ? denTongBat : denTongTat,
+            //                 style: TextStyle(fontSize: 15),
+            //               )
+            //             ],
+            //           )),
+            //         ),
+            //       ),
+            //       Card(
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(15.0),
+            //         ),
+            //         child: InkWell(
+            //           onTap: () {
+            //             vQuatTong();
+            //           },
+            //           splashColor: Colors.red,
+            //           child: Center(
+            //               child: Column(
+            //             mainAxisSize: MainAxisSize.min,
+            //             children: <Widget>[
+            //               Padding(
+            //                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+            //                 child: Image.asset(
+            //                     quatTong ? batQuatTong : tatQuatTong,
+            //                     width: 50),
+            //               ),
+            //               Text(
+            //                 quatTong ? quatTongBat : quatTongTat,
+            //                 style: TextStyle(fontSize: 15),
+            //               )
+            //             ],
+            //           )),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Card(
               margin: EdgeInsets.fromLTRB(13, 10, 13, 0),
               shape: RoundedRectangleBorder(
