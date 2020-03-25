@@ -152,51 +152,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // void vDenTong() {
-  //   setState(() {
-  //     denTong = !denTong;
-  //     if (denTong == true) {
-  //       denKhach = true;
-  //       denNgu = true;
-  //       denBep = true;
-  //       denTam = true;
-  //       updateFirebase();
-  //       // updateState();
-  //     } else {
-  //       denKhach = false;
-  //       denNgu = false;
-  //       denBep = false;
-  //       denTam = false;
-  //       updateFirebase();
-  //       // updateState();
-  //     }
-  //   });
-  // }
-
-  // void vQuatTong() {
-  //   setState(() {
-  //     quatTong = !quatTong;
-  //     if (quatTong == true) {
-  //       quatKhach = true;
-  //       quatNgu = true;
-  //       quatBep = true;
-  //       updateFirebase();
-  //       // updateState();
-  //     } else {
-  //       quatKhach = false;
-  //       quatNgu = false;
-  //       quatBep = false;
-  //       updateFirebase();
-  //       // updateState();
-  //     }
-  //   });
-  // }
-
   void vCuaNha() {
     setState(() {
       cuaNha = !cuaNha;
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -204,7 +163,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       quanAo = !quanAo;
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -212,16 +170,13 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denKhach = !denKhach;
       updateFirebase();
-      // updateState();
     });
   }
 
   void vQuatKhach() {
     setState(() {
       quatKhach = !quatKhach;
-
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -229,7 +184,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denNgu = !denNgu;
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -237,7 +191,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       quatNgu = !quatNgu;
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -245,7 +198,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denBep = !denBep;
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -253,7 +205,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       quatBep = !quatBep;
       updateFirebase();
-      // updateState();
     });
   }
 
@@ -261,60 +212,129 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       denTam = !denTam;
       updateFirebase();
-      // updateState();
     });
+  }
+
+  void updateCuaNha() {
+    if (ttCuaNha == "1") {
+      cuaNha = true;
+    } else if (ttCuaNha == "0") {
+      cuaNha = false;
+    } else {}
+  }
+
+  void updateQuanAo() {
+    if (ttQuanAo == "1") {
+      quanAo = true;
+    } else {
+      quanAo = false;
+    }
+  }
+
+  void updateDenKhach() {
+    if (ttDenKhach == "1") {
+      denKhach = true;
+    } else {
+      denKhach = false;
+    }
+  }
+
+  void updateQuatKhach() {
+    if (ttQuatKhach == "1") {
+      quatKhach = true;
+    } else {
+      quatKhach = false;
+    }
+  }
+
+  void updateDenBep() {
+    if (ttDenBep == "1") {
+      denBep = true;
+    } else {
+      denBep = false;
+    }
+  }
+
+  void updateQuatBep() {
+    if (ttQuatBep == "1") {
+      quatBep = true;
+    } else {
+      quatBep = false;
+    }
+  }
+
+  void updateDenNgu() {
+    if (ttDenNgu == "1") {
+      denNgu = true;
+    } else {
+      denNgu = false;
+    }
+  }
+
+  void updateQuatNgu() {
+    if (ttQuatNgu == "1") {
+      quatNgu = true;
+    } else {
+      quatNgu = false;
+    }
+  }
+
+  void updateDenTam() {
+    if (ttDenTam == "1") {
+      denTam = true;
+    } else {
+      denTam = false;
+    }
   }
 
   void updateState() {
     // sân nhà - gara
     if (ttCuaNha == "1") {
       cuaNha = true;
-    } else {
+    } else if (ttCuaNha == "0") {
       cuaNha = false;
-    }
-    if (ttQuanAo == "1") {
+    } else if (ttQuanAo == "1") {
       quanAo = true;
-    } else {
+    } else if (ttQuanAo == "0") {
       quanAo = false;
     }
     // phòng khách
-    if (ttDenKhach == "1") {
+    else if (ttDenKhach == "1") {
       denKhach = true;
-    } else {
+    } else if (ttDenKhach == "0") {
       denKhach = false;
-    }
-    if (ttQuatKhach == "1") {
+    } else if (ttQuatKhach == "1") {
       quatKhach = true;
-    } else {
+    } else if (ttQuatKhach == "0") {
       quatKhach = false;
     }
     // phòng ngủ
-    if (ttDenNgu == "1") {
+    else if (ttDenNgu == "1") {
       denNgu = true;
-    } else {
+    } else if (ttDenNgu == "0") {
       denNgu = false;
-    }
-    if (ttQuatNgu == "1") {
+    } else if (ttQuatNgu == "1") {
       quatNgu = true;
-    } else {
+    } else if (ttQuatNgu == "0") {
       quatNgu = false;
     }
     // phòng bếp
-    if (ttDenBep == "1") {
+    else if (ttDenBep == "1") {
       denBep = true;
-    } else {
+    } else if (ttDenBep == "0") {
       denBep = false;
-    }
-    if (ttQuatBep == "1") {
+    } else if (ttQuatBep == "1") {
       quatBep = true;
-    } else {
+    } else if (ttQuatBep == "0") {
       quatBep = false;
     }
     // phòng tắm
-    if (ttDenTam == "1") {
+    else if (ttDenTam == "1") {
       denTam = true;
-    } else {
+    } else if (ttDenTam == "0") {
       denTam = false;
+    } else {
+      print('update statesss');
     }
   }
 
@@ -369,6 +389,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       FirebaseDatabase.instance.reference().update({'DEN_PHONG_TAM': '0'});
     }
+    print('updatefirebasesss');
   }
 
   void readFirebase() {
@@ -399,9 +420,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     initSpeechRecognizer();
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(microseconds: 5), (timer) {
       readFirebase();
-      updateState();
+      // updateState();
+      updateCuaNha();
+      updateQuanAo();
+      updateDenKhach();
+      updateDenBep();
+      updateDenNgu();
+      updateDenTam();
+      updateQuatKhach();
+      updateQuatBep();
+      updateQuatNgu();
     });
   }
 
@@ -422,7 +452,6 @@ class _HomePageState extends State<HomePage> {
                       resultText,
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                     );
-                    print("day la ssssssssss "+resultText.toString());
 
                     if (_isAvailable && !_isListening)
                       _speechRecognition
