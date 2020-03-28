@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_recognition/speech_recognition.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,13 +8,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // final FirebaseDatabase.instance.reference() = FirebaseDatabase.instance.reference();
-
-  SpeechRecognition _speechRecognition;
-  bool _isAvailable = false;
-  bool _isListening = false;
-
-  String resultText = "";
 
   String nhietDo = "";
   String doAm = "";
@@ -110,45 +102,6 @@ class _HomePageState extends State<HomePage> {
       wPhongBep();
       wPhongTam();
       wSanNhaGara();
-    });
-  }
-
-  void initSpeechRecognizer() {
-    _speechRecognition = SpeechRecognition();
-
-    _speechRecognition.setAvailabilityHandler(
-      (bool result) => setState(() => _isAvailable = result),
-    );
-
-    _speechRecognition.setRecognitionStartedHandler(
-      () => setState(() => _isListening = true),
-    );
-
-    _speechRecognition.setRecognitionResultHandler(
-      (String speech) => setState(() => resultText = speech),
-    );
-
-    _speechRecognition.setRecognitionCompleteHandler(
-      () => setState(() => _isListening = false),
-    );
-
-    _speechRecognition.activate().then(
-          (result) => setState(() => _isAvailable = result),
-        );
-  }
-
-  void batTatVoice() {
-    setState(() {
-      switch (resultText.toString()) {
-        case 'Open One':
-          denKhach = true;
-          print('thành công');
-          break;
-        case 'close':
-          // phongKhach = false;
-          break;
-        default:
-      }
     });
   }
 
@@ -397,7 +350,7 @@ class _HomePageState extends State<HomePage> {
         .reference()
         .once()
         .then((DataSnapshot dataSnapshot) {
-      print(dataSnapshot.value);
+      // print(dataSnapshot.value);
       setState(() {
         nhietDo = dataSnapshot.value["NHIET_DO"].toString();
         doAm = dataSnapshot.value["DO_AM"].toString();
@@ -419,8 +372,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    initSpeechRecognizer();
-    Timer.periodic(Duration(microseconds: 5), (timer) {
+    Timer.periodic(Duration(microseconds: 1000), (timer) {
       readFirebase();
       // updateState();
       updateCuaNha();
@@ -438,51 +390,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: setAppBar,
-        actions: <Widget>[
-          IconButton(
-            icon: setIcon,
-            onPressed: () {
-              setState(
-                () {
-                  if (this.setIcon.icon == Icons.keyboard_voice) {
-                    this.setIcon = Icon(Icons.cancel);
-                    this.setAppBar = Text(
-                      resultText,
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    );
-
-                    if (_isAvailable && !_isListening)
-                      _speechRecognition
-                          .listen(locale: "en_US")
-                          // .listen(locale: "vi_VN")
-                          .then(
-                            (result) => print('day la $result'),
-                          );
-                  } else {
-                    this.setIcon = Icon(Icons.keyboard_voice);
-                    this.setAppBar = Text("Home");
-
-                    if (_isListening)
-                      _speechRecognition.cancel().then(
-                            (result) => setState(
-                              () {
-                                _isListening = result;
-                                print('stop voice');
-                              },
-                            ),
-                          );
-                  }
-                },
-              );
-            },
-          )
-        ],
-      ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
           child: Container(
             color: Colors.blue[50],
             child: SingleChildScrollView(
@@ -494,8 +404,8 @@ class _HomePageState extends State<HomePage> {
                   wSanNhaGara(),
                   wPhongKhach(),
                   wPhongNgu(),
-                  wPhongBep(),
-                  wPhongTam(),
+                  // wPhongBep(),
+                  // wPhongTam(),
                   const SizedBox(height: 50.0),
                 ],
               ),
@@ -531,70 +441,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Divider(),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-            //   child: GridView.count(
-            //     shrinkWrap: true,
-            //     crossAxisCount: 2,
-            //     // physics: AlwaysScrollableScrollPhysics(),
-            //     children: <Widget>[
-            //       Card(
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(15.0),
-            //         ),
-            //         child: InkWell(
-            //           onTap: () {
-            //             vDenTong();
-            //           },
-            //           splashColor: Colors.red,
-            //           child: Center(
-            //               child: Column(
-            //             mainAxisSize: MainAxisSize.min,
-            //             children: <Widget>[
-            //               Padding(
-            //                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-            //                 child: Image.asset(
-            //                     denTong ? batDenTong : tatDenTong,
-            //                     width: 50),
-            //               ),
-            //               Text(
-            //                 denTong ? denTongBat : denTongTat,
-            //                 style: TextStyle(fontSize: 15),
-            //               )
-            //             ],
-            //           )),
-            //         ),
-            //       ),
-            //       Card(
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(15.0),
-            //         ),
-            //         child: InkWell(
-            //           onTap: () {
-            //             vQuatTong();
-            //           },
-            //           splashColor: Colors.red,
-            //           child: Center(
-            //               child: Column(
-            //             mainAxisSize: MainAxisSize.min,
-            //             children: <Widget>[
-            //               Padding(
-            //                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-            //                 child: Image.asset(
-            //                     quatTong ? batQuatTong : tatQuatTong,
-            //                     width: 50),
-            //               ),
-            //               Text(
-            //                 quatTong ? quatTongBat : quatTongTat,
-            //                 style: TextStyle(fontSize: 15),
-            //               )
-            //             ],
-            //           )),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Card(
               margin: EdgeInsets.fromLTRB(13, 10, 13, 0),
               shape: RoundedRectangleBorder(

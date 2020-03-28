@@ -1,4 +1,5 @@
 import 'package:du_an_iot/homeScreen.dart';
+import 'package:du_an_iot/myApp.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shimmer/shimmer.dart';
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToHome() {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+        MaterialPageRoute(builder: (BuildContext context) => MyAppPage()));
   }
 
   // void _navigateToLogin(){
@@ -44,33 +45,35 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Opacity(opacity: 0.5, child: Image.asset('assets/bg.png')),
-            Shimmer.fromColors(
-              period: Duration(milliseconds: 1500),
-              baseColor: Color(0xff7f00ff),
-              highlightColor: Color(0xffe100ff),
-              child: Container(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  "My things",
-                  style: TextStyle(
-                      fontSize: 50.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Pacifico',
-                      shadows: <Shadow>[
-                        Shadow(
-                            blurRadius: 18.0,
-                            color: Colors.black87,
-                            offset: Offset.fromDirection(120, 12))
-                      ]),
+      body: Center(
+        child: Container(
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Opacity(opacity: 0.5, child: Image.asset('assets/bg.png',width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,)),
+              Shimmer.fromColors(
+                period: Duration(milliseconds: 1500),
+                baseColor: Color(0xff7f00ff),
+                highlightColor: Color(0xffe100ff),
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    "My things",
+                    style: TextStyle(
+                        fontSize: 50.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Pacifico',
+                        shadows: <Shadow>[
+                          Shadow(
+                              blurRadius: 18.0,
+                              color: Colors.black87,
+                              offset: Offset.fromDirection(120, 12))
+                        ]),
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
