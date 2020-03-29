@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToHome() {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => MyAppPage()));
+        MaterialPageRoute(builder: (BuildContext context) => HomePage()));
   }
 
   // void _navigateToLogin(){

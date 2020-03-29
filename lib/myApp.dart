@@ -12,10 +12,13 @@ class _MyAppPageState extends State<MyAppPage> {
   bool _isAvailable = false;
   bool _isListening = false;
 
+  String resultText = "nói gì đi ba";
+
   @override
   void initState() {
     super.initState();
     initSpeechRecognizer();
+    checkText();
   }
 
   void initSpeechRecognizer() {
@@ -42,7 +45,21 @@ class _MyAppPageState extends State<MyAppPage> {
         );
   }
 
-  String resultText = "";
+  void checkText() {
+    switch (resultText) {
+      case "nói gì đi ba":
+        {
+          print('đang nói nè');
+        }
+        break;
+      case "TWO":
+        {}
+        break;
+      default:
+        {}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +87,8 @@ class _MyAppPageState extends State<MyAppPage> {
                             ),
                             child: Text(
                               resultText,
-                              style: TextStyle(fontSize: 24.0),
+                              style: TextStyle(
+                                  fontSize: 15.0, fontWeight: FontWeight.bold),
                             ),
                           )),
                       Flexible(
@@ -99,13 +117,9 @@ class _MyAppPageState extends State<MyAppPage> {
                             size: 30,
                           ),
                           onPressed: () {
-                            // if (_isListening)
-                            //   _speechRecognition.cancel().then(
-                            //         (result) => setState(() {
-                            //           _isListening = result;
-                            //           resultText = "";
-                            //         }),
-                            //       );
+                            setState(() {
+                              resultText = "";
+                            });
                           },
                         ),
                       ),
