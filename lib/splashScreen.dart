@@ -1,5 +1,4 @@
 import 'package:du_an_iot/homeScreen.dart';
-import 'package:du_an_iot/myApp.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shimmer/shimmer.dart';
@@ -50,7 +49,14 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              Opacity(opacity: 0.5, child: Image.asset('assets/bg.png',width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,)),
+              Opacity(
+                opacity: 0.5,
+                child: Image.asset(
+                  'assets/bg.png',
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                ),
+              ),
               Shimmer.fromColors(
                 period: Duration(milliseconds: 1500),
                 baseColor: Color(0xff7f00ff),

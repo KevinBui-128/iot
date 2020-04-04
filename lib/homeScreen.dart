@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 class HomePage extends StatefulWidget {
@@ -384,6 +385,7 @@ class _HomePageState extends State<HomePage> {
 
   void initSpeechRecognizer() {
     _speechRecognition = SpeechRecognition();
+    requestPermission();
 
     _speechRecognition.setAvailabilityHandler(
       (bool result) => setState(() => _isAvailable = result),
@@ -404,6 +406,16 @@ class _HomePageState extends State<HomePage> {
     _speechRecognition.activate().then(
           (result) => setState(() => _isAvailable = result),
         );
+  }
+
+  void requestPermission() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.microphone);
+
+    if (permission != PermissionStatus.granted) {
+      await PermissionHandler()
+          .requestPermissions([PermissionGroup.microphone]);
+    }
   }
 
   void checkText() {
@@ -428,6 +440,7 @@ class _HomePageState extends State<HomePage> {
           quatKhach = false;
         }
         break;
+
       case "Bật đèn ngủ":
         {
           denNgu = true;
@@ -438,19 +451,17 @@ class _HomePageState extends State<HomePage> {
           denNgu = false;
         }
         break;
-
-        
-
-        case "bật đèn khách":
+      case "bật quạt ngủ":
         {
-          denKhach = true;
+          quatNgu = true;
         }
         break;
-      case "tắt đèn khách":
+      case "tắt quạt ngủ":
         {
-          denKhach = false;
+          quatNgu = false;
         }
         break;
+
       case "bật quạt khách":
         {
           quatKhach = true;
@@ -471,16 +482,6 @@ class _HomePageState extends State<HomePage> {
           denNgu = false;
         }
         break;
-      // case "Bật quạt ngủ":
-      //   {
-      //     quatNgu = true;
-      //   }
-      //   break;
-      // case "Tắt quạt ngủ":
-      //   {
-      //     quatKhach = false;
-      //   }
-      //   break;
       default:
         {}
     }
@@ -1174,68 +1175,68 @@ class _HomePageState extends State<HomePage> {
             Divider(),
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-              child: 
-              // GridView.count(
-              //   shrinkWrap: true,
-              //   crossAxisCount: 2,
-              //   // physics: (),
-              //   children: <Widget>[
-              //     Card(
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(15.0),
-              //       ),
-              //       child: InkWell(
-              //         onTap: () {
-              //           vDenNgu();
-              //         },
-              //         splashColor: Colors.red,
-              //         child: Center(
-              //             child: Column(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: <Widget>[
-              //             Padding(
-              //               padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-              //               child: Image.asset(denNgu ? batDenNgu : tatDenNgu,
-              //                   width: 50),
-              //             ),
-              //             Text(
-              //               denNgu ? denNguBat : denNguTat,
-              //               style: TextStyle(fontSize: 15),
-              //             )
-              //           ],
-              //         )),
-              //       ),
-              //     ),
-              //     Card(
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(15.0),
-              //       ),
-              //       child: InkWell(
-              //         onTap: () {
-              //           vQuatNgu();
-              //         },
-              //         splashColor: Colors.red,
-              //         child: Center(
-              //             child: Column(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: <Widget>[
-              //             Padding(
-              //               padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-              //               child: Image.asset(
-              //                   quatNgu ? batQuatNgu : tatQuatNgu,
-              //                   width: 50),
-              //             ),
-              //             Text(
-              //               quatNgu ? quatNguBat : quatNguTat,
-              //               style: TextStyle(fontSize: 15),
-              //             )
-              //           ],
-              //         )),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              Container(
+              child:
+                  // GridView.count(
+                  //   shrinkWrap: true,
+                  //   crossAxisCount: 2,
+                  //   // physics: (),
+                  //   children: <Widget>[
+                  //     Card(
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(15.0),
+                  //       ),
+                  //       child: InkWell(
+                  //         onTap: () {
+                  //           vDenNgu();
+                  //         },
+                  //         splashColor: Colors.red,
+                  //         child: Center(
+                  //             child: Column(
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: <Widget>[
+                  //             Padding(
+                  //               padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  //               child: Image.asset(denNgu ? batDenNgu : tatDenNgu,
+                  //                   width: 50),
+                  //             ),
+                  //             Text(
+                  //               denNgu ? denNguBat : denNguTat,
+                  //               style: TextStyle(fontSize: 15),
+                  //             )
+                  //           ],
+                  //         )),
+                  //       ),
+                  //     ),
+                  //     Card(
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(15.0),
+                  //       ),
+                  //       child: InkWell(
+                  //         onTap: () {
+                  //           vQuatNgu();
+                  //         },
+                  //         splashColor: Colors.red,
+                  //         child: Center(
+                  //             child: Column(
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: <Widget>[
+                  //             Padding(
+                  //               padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                  //               child: Image.asset(
+                  //                   quatNgu ? batQuatNgu : tatQuatNgu,
+                  //                   width: 50),
+                  //             ),
+                  //             Text(
+                  //               quatNgu ? quatNguBat : quatNguTat,
+                  //               style: TextStyle(fontSize: 15),
+                  //             )
+                  //           ],
+                  //         )),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  Container(
                 padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
                 height: 150,
                 child: Card(
@@ -1257,7 +1258,7 @@ class _HomePageState extends State<HomePage> {
                               width: 50),
                         ),
                         Text(
-                          denNgu ? denNguBat: denNguTat,
+                          denNgu ? denNguBat : denNguTat,
                           style: TextStyle(fontSize: 15),
                         )
                       ],
