@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:speech_recognition/speech_recognition.dart';
+import 'package:speech_to_text_plugins/speech_to_text_plugins.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,7 +12,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SpeechRecognition _speechRecognition;
+  String _platformVersion = 'Unknown';
+
+  SpeechToTextPlugins speechToTextPlugins = SpeechToTextPlugins();
+
   bool _isAvailable = false;
   bool _isListening = false;
 
@@ -383,29 +388,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void initSpeechRecognizer() {
-    _speechRecognition = SpeechRecognition();
+  Future<void> initPlatformState() async {
     requestPermission();
+    String platformVersion;
+    try {} on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
 
-    _speechRecognition.setAvailabilityHandler(
-      (bool result) => setState(() => _isAvailable = result),
-    );
-
-    _speechRecognition.setRecognitionStartedHandler(
-      () => setState(() => _isListening = true),
-    );
-
-    _speechRecognition.setRecognitionResultHandler(
-      (String speech) => setState(() => resultText = speech),
-    );
-
-    _speechRecognition.setRecognitionCompleteHandler(
-      () => setState(() => _isListening = false),
-    );
-
-    _speechRecognition.activate().then(
-          (result) => setState(() => _isAvailable = result),
-        );
+    setState(() {
+      _platformVersion = platformVersion;
+    });
   }
 
   void requestPermission() async {
@@ -420,43 +413,45 @@ class _HomePageState extends State<HomePage> {
 
   void checkText() {
     switch (resultText) {
-      case "Bật đèn khách":
+      case "hello":
         {
           denKhach = true;
+          // print("den khach batttttttttttt");
         }
         break;
-      case "Tắt đèn khách":
+      case "school":
         {
           denKhach = false;
+          // print("Den khach tatttttttttttttttt");
         }
         break;
       case "Bật quạt khách":
         {
-          quatKhach = true;
+          // quatKhach = true;
         }
         break;
       case "Tắt quạt khách":
         {
-          quatKhach = false;
+          // quatKhach = false;
         }
         break;
 
-      case "Bật đèn ngủ":
+      case "turn on the bedroom fan":
         {
           denNgu = true;
         }
         break;
-      case "Tắt đèn ngủ":
+      case "turn off the bedroom fan":
         {
           denNgu = false;
         }
         break;
-      case "bật quạt ngủ":
+      case "Turn on the bedroom fan":
         {
           quatNgu = true;
         }
         break;
-      case "tắt quạt ngủ":
+      case "Turn off the bedroom fan":
         {
           quatNgu = false;
         }
@@ -482,6 +477,26 @@ class _HomePageState extends State<HomePage> {
           denNgu = false;
         }
         break;
+
+      case "a":
+        {
+          // quatKhach = false;
+          print("AAAAAAAAAAAAAAAAAAAAA");
+        }
+        break;
+      case "b":
+        {
+          // denNgu = true;
+          print("BBBBBBBBBBBBBBBBBBB");
+        }
+        break;
+      case "c":
+        {
+          // denNgu = false;
+          print("CCCCCCCCCCCCCCCC");
+        }
+        break;
+
       default:
         {}
     }
@@ -490,8 +505,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    initSpeechRecognizer();
-    checkText();
+    initPlatformState();
+    
     Timer.periodic(Duration(microseconds: 1000), (timer) {
       readFirebase();
       // updateState();
@@ -547,11 +562,13 @@ class _HomePageState extends State<HomePage> {
                             size: 40,
                           ),
                           onPressed: () {
-                            if (_isAvailable && !_isListening)
-                              _speechRecognition
-                                  .listen(locale: "en_US")
-                                  // .listen(locale: "vi_VN")
-                                  .then((result) => print('$result'));
+                            speechToTextPlugins.listen().then((onValue) {
+                              setState(() {
+                                resultText = onValue.join("");
+                                print(resultText);
+                              });
+                            });
+                            checkText();
                           },
                         ),
                       ),
@@ -565,7 +582,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                           onPressed: () {
                             setState(() {
-                              resultText = "";
+                              speechToTextPlugins.cancel().then((onValue) {
+                                resultText = "";
+                                print(onValue);
+                              });
                             });
                           },
                         ),

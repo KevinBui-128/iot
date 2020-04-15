@@ -1,154 +1,108 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:speech_recognition/speech_recognition.dart';
+import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:speech_to_text_plugins/speech_to_text_plugins.dart';
 
-const languages = const [
-  const Language('Francais', 'fr_FR'),
-  const Language('English', 'en_US'),
-  const Language('Pусский', 'ru_RU'),
-  const Language('Italiano', 'it_IT'),
-  const Language('Español', 'es_ES'),
-];
-
-class Language {
-  final String name;
-  final String code;
-
-  const Language(this.name, this.code);
+class GaoPage extends StatefulWidget {
+  @override
+  _GaoPageState createState() => _GaoPageState();
 }
 
-class MyAppVoice extends StatefulWidget {
-  @override
-  _MyAppState createState() => new _MyAppState();
-}
+class _GaoPageState extends State<GaoPage> {
+  String _platformVersion = 'Unknown';
+  String textDay = 'aaa';
 
-class _MyAppState extends State<MyAppVoice> {
-  SpeechRecognition _speech;
-
-  bool _speechRecognitionAvailable = false;
-  bool _isListening = false;
-
-  String transcription = '';
-
-  //String _currentLocale = 'en_US';
-  Language selectedLang = languages.first;
+  SpeechToTextPlugins speechToTextPlugins = SpeechToTextPlugins();
 
   @override
-  initState() {
+  void initState() {
     super.initState();
-    activateSpeechRecognizer();
+    initPlatformState();
+    
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  void activateSpeechRecognizer() {
-    print('_MyAppState.activateSpeechRecognizer... ');
-    _speech = new SpeechRecognition();
-    _speech.setAvailabilityHandler(onSpeechAvailability);
-    _speech.setCurrentLocaleHandler(onCurrentLocale);
-    _speech.setRecognitionStartedHandler(onRecognitionStarted);
-    _speech.setRecognitionResultHandler(onRecognitionResult);
-    _speech.setRecognitionCompleteHandler(onRecognitionComplete);
-    // _speech.setErrorHandler(errorHandler);
-    _speech
-        .activate()
-        .then((res) => setState(() => _speechRecognitionAvailable = res));
+  void requestPermission() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.microphone);
+
+    if (permission != PermissionStatus.granted) {
+      await PermissionHandler()
+          .requestPermissions([PermissionGroup.microphone]);
+    }
+  }
+
+  Future<void> initPlatformState() async {
+    requestPermission();
+    String platformVersion;
+    try {
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('SpeechRecognition'),
-          actions: [
-            new PopupMenuButton<Language>(
-              onSelected: _selectLangHandler,
-              itemBuilder: (BuildContext context) => _buildLanguagesWidgets,
-            )
-          ],
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
         ),
-        body: new Padding(
-            padding: new EdgeInsets.all(8.0),
-            child: new Center(
-              child: new Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  new Expanded(
-                      child: new Container(
-                          padding: const EdgeInsets.all(8.0),
-                          color: Colors.grey.shade200,
-                          child: new Text(transcription))),
-                  _buildButton(
-                    onPressed: _speechRecognitionAvailable && !_isListening
-                        ? () => start()
-                        : null,
-                    label: _isListening
-                        ? 'Listening...'
-                        : 'Listen (${selectedLang.code})',
+        body: Center(
+            child: Container(
+          child: Column(
+            children: <Widget>[
+              Text(textDay),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text('activate'),
+                    onPressed: () {
+                      speechToTextPlugins.activate().then((onValue) {
+                        print(onValue);
+                      });
+                    },
                   ),
-                  _buildButton(
-                    onPressed: _isListening ? () => cancel() : null,
-                    label: 'Cancel',
+                  RaisedButton(
+                    child: Text('listen'),
+                    onPressed: () {
+                      speechToTextPlugins.listen().then((onValue) {
+                        setState(() {
+                          textDay = onValue.join("");
+                          print(textDay);
+                        });
+                      });
+                    },
                   ),
-                  _buildButton(
-                    onPressed: _isListening ? () => stop() : null,
-                    label: 'Stop',
+                  RaisedButton(
+                    child: Text('stop'),
+                    onPressed: () {
+                      speechToTextPlugins.stop().then((onValue) {
+                        print(onValue);
+                      });
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('cancel'),
+                    onPressed: () {
+                      speechToTextPlugins.cancel().then((onValue) {
+                        print(onValue);
+                      });
+                    },
                   ),
                 ],
               ),
-            )),
+            ],
+          ),
+        )),
       ),
     );
   }
-
-  List<CheckedPopupMenuItem<Language>> get _buildLanguagesWidgets => languages
-      .map((l) => new CheckedPopupMenuItem<Language>(
-            value: l,
-            checked: selectedLang == l,
-            child: new Text(l.name),
-          ))
-      .toList();
-
-  void _selectLangHandler(Language lang) {
-    setState(() => selectedLang = lang);
-  }
-
-  Widget _buildButton({String label, VoidCallback onPressed}) => new Padding(
-      padding: new EdgeInsets.all(12.0),
-      child: new RaisedButton(
-        color: Colors.cyan.shade600,
-        onPressed: onPressed,
-        child: new Text(
-          label,
-          style: const TextStyle(color: Colors.white),
-        ),
-      ));
-
-  void start() => _speech
-      .listen(locale: selectedLang.code)
-      .then((result) => print('_MyAppState.start => result $result'));
-
-  void cancel() =>
-      _speech.cancel().then((result) => setState(() => _isListening = result));
-
-  void stop() => _speech.stop().then((result) {
-        setState(() => _isListening = result);
-      });
-
-  void onSpeechAvailability(bool result) =>
-      setState(() => _speechRecognitionAvailable = result);
-
-  void onCurrentLocale(String locale) {
-    print('_MyAppState.onCurrentLocale... $locale');
-    setState(
-        () => selectedLang = languages.firstWhere((l) => l.code == locale));
-  }
-
-  void onRecognitionStarted() => setState(() => _isListening = true);
-
-  void onRecognitionResult(String text) => setState(() => transcription = text);
-
-  void onRecognitionComplete() => setState(() => _isListening = false);
-
-  void errorHandler() => activateSpeechRecognizer();
 }
