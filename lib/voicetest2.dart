@@ -75,7 +75,7 @@ class _GaoPageState extends State<GaoPage> {
                     onPressed: () {
                       speechToTextPlugins.listen().then((onValue) {
                         setState(() {
-                          textDay = onValue.join("");
+                          textDay = onValue[0];
                           print(textDay);
                         });
                       });

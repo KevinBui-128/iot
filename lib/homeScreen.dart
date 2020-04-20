@@ -12,7 +12,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _platformVersion = 'Unknown';
+  String titleTrangThaiChung = "General state";
+  String titleSanGara = "Yard - Gara";
+  String titlePhongKhach = "Living room";
+  String titlePhongNgu = "Bedroom";
+  String titlePhongBep = "Kitchen";
+  String titlePhongTam = "Bathroom";
+  String titleBatDen = "Turn on";
+  String titleTatDen = "Turn off";
+  String titleBatQuat = "Turn on";
+  String titleTatQuat = "Turn off";
+  String titleNhietDo = "Temperature";
+  String titleDoAm = "Humidity";
+  String titleKhiGas = "Gas";
+  String titleDen = "Lamp ";
+  String titleQuat = "Fan ";
+  String titleBat = "On";
+  String titleTat = "Off";
+
+  String _platformVersion = 'vi_VN';
 
   SpeechToTextPlugins speechToTextPlugins = SpeechToTextPlugins();
 
@@ -34,8 +52,7 @@ class _HomePageState extends State<HomePage> {
   String ttQuatBep = "";
   String ttDenTam = "";
 
-  // bool denTong = false;
-  // bool quatTong = false;
+  bool nguon = false;
   bool cuaNha = false;
   bool quanAo = false;
   bool denKhach = false;
@@ -52,8 +69,8 @@ class _HomePageState extends State<HomePage> {
 
   // String batDenTong = 'assets/lightallon.png';
   // String tatDenTong = 'assets/lightalloff.png';
-  // String batQuatTong = 'assets/fanallon.png';
-  // String tatQuatTong = 'assets/fanalloff.png';
+  String batNguon = 'assets/batNguon.png';
+  String tatNguon = 'assets/tatNguon.png';
   String moCua = 'assets/opendoor.png';
   String dongCua = 'assets/closeddoor.png';
   String phoiDo = 'assets/phoi.png';
@@ -79,30 +96,30 @@ class _HomePageState extends State<HomePage> {
 
   // String denTongBat = 'Bật tất cả đèn';
   // String denTongTat = 'Tắt tất cả đèn';
-  // String quatTongBat = 'Bật tất cả quạt';
-  // String quatTongTat = 'Tắt tất cả quạt';
-  String cuaMo = 'Mở cửa';
-  String cuaDong = 'Đóng cửa';
-  String doPhoi = 'Phơi quần áo';
-  String doThu = 'Thu quần áo';
+  String nguonBat = 'Open power';
+  String nguonTat = 'Close power';
+  String cuaMo = 'Open';
+  String cuaDong = 'Close';
+  String doPhoi = 'Dry';
+  String doThu = 'Collect';
 
-  String denKhachBat = 'Bật đèn';
-  String denKhachTat = 'Tắt đèn';
-  String denNguBat = 'Bật đèn';
-  String denNguTat = 'Tắt đèn';
-  String denBepBat = 'Bật đèn';
-  String denBepTat = 'Tắt đèn';
-  String denTamBat = 'Bật đèn';
-  String denTamTat = 'Tắt đèn';
+  String denKhachBat = 'Turn on';
+  String denKhachTat = 'Turn off';
+  String denNguBat = 'Turn on';
+  String denNguTat = 'Turn off';
+  String denBepBat = 'Turn on';
+  String denBepTat = 'Turn off';
+  String denTamBat = 'Turn on';
+  String denTamTat = 'Turn off';
 
-  String quatKhachBat = 'Bật quạt';
-  String quatKhachTat = 'Tắt quạt';
-  String quatNguBat = 'Bật quạt';
-  String quatNguTat = 'Tắt quạt';
-  String quatBepBat = 'Bật quạt';
-  String quatBepTat = 'Tắt quạt';
-  // String quatTamBat = 'Bật quạt';
-  // String quatTamTat = 'Tắt quạt';
+  String quatKhachBat = 'Turn on';
+  String quatKhachTat = 'Turn off';
+  String quatNguBat = 'Turn on';
+  String quatNguTat = 'Turn off';
+  String quatBepBat = 'Turn on';
+  String quatBepTat = 'Turn off';
+  // String quatTamBat = 'Turn on';
+  // String quatTamTat = 'Turn off';
 
   @override
   void didChangeDependencies() {
@@ -114,6 +131,13 @@ class _HomePageState extends State<HomePage> {
       wPhongBep();
       wPhongTam();
       wSanNhaGara();
+    });
+  }
+
+  void vNguon() {
+    setState(() {
+      nguon = !nguon;
+      // updateFirebase();
     });
   }
 
@@ -304,8 +328,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void updateFirebase() {
+    // nguồn tổng
+    // if (nguon == true) {
+    //   FirebaseDatabase.instance.reference().update({'CUA_NHA': '1'});
+    // } else {
+    //   FirebaseDatabase.instance.reference().update({'CUA_NHA': '0'});
+    // }
     // sân nhà - gara
-    if (cuaNha == true) {
+    if (nguon == true) {
       FirebaseDatabase.instance.reference().update({'CUA_NHA': '1'});
     } else {
       FirebaseDatabase.instance.reference().update({'CUA_NHA': '0'});
@@ -411,60 +441,74 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void checkText() {
+  void checkText(String resultText) {
     switch (resultText) {
       case "hello":
         {
           denKhach = true;
-          // print("den khach batttttttttttt");
+          updateFirebase();
+          print("den khach batttttttttttt");
         }
         break;
       case "school":
         {
           denKhach = false;
-          // print("Den khach tatttttttttttttttt");
+          updateFirebase();
+          print("Den khach tatttttttttttttttt");
         }
         break;
-      case "Bật quạt khách":
+      case "turn on the living room fan":
         {
-          // quatKhach = true;
+          quatKhach = true;
+          updateFirebase();
+          print("Bật quạt khách");
         }
         break;
-      case "Tắt quạt khách":
+      case "turn off the living room fan":
         {
-          // quatKhach = false;
+          quatKhach = false;
+          updateFirebase();
+          print("Tắt quạt khách");
         }
         break;
 
       case "turn on the bedroom fan":
         {
           denNgu = true;
+          updateFirebase();
+          print("bật quạt ngủ");
         }
         break;
       case "turn off the bedroom fan":
         {
           denNgu = false;
+          updateFirebase();
+          print("bật quạt ngủ");
         }
         break;
       case "Turn on the bedroom fan":
         {
           quatNgu = true;
+          updateFirebase();
         }
         break;
       case "Turn off the bedroom fan":
         {
           quatNgu = false;
+          updateFirebase();
         }
         break;
 
       case "bật quạt khách":
         {
           quatKhach = true;
+          updateFirebase();
         }
         break;
       case "tắt quạt khách":
         {
           quatKhach = false;
+          updateFirebase();
         }
         break;
       case "bật đèn ngủ":
@@ -498,15 +542,35 @@ class _HomePageState extends State<HomePage> {
         break;
 
       default:
-        {}
+        {
+          _showDialog(context, "Thông báo", "Câu lệnh không tồn tại");
+        }
     }
+  }
+
+  _showDialog(BuildContext mainContext, String title, String message) async {
+    await showDialog(
+      context: mainContext,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Ok"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
-    
+
     Timer.periodic(Duration(microseconds: 1000), (timer) {
       readFirebase();
       // updateState();
@@ -564,11 +628,11 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             speechToTextPlugins.listen().then((onValue) {
                               setState(() {
-                                resultText = onValue.join("");
+                                resultText = onValue[0];
+                                checkText(resultText);
                                 print(resultText);
                               });
                             });
-                            checkText();
                           },
                         ),
                       ),
@@ -642,7 +706,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 15, 0, 5),
               child: Text(
-                'Trạng thái chung',
+                titleTrangThaiChung,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 15,
@@ -650,6 +714,38 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Divider(),
+            Container(
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+              height: 150,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    vNguon();
+                  },
+                  splashColor: Colors.red,
+                  child: Center(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child:
+                            Image.asset(nguon ? batNguon : tatNguon, width: 50),
+                      ),
+                      Text(
+                        nguon ? nguonBat : nguonTat,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: nguon ? Colors.green : Colors.red),
+                      )
+                    ],
+                  )),
+                ),
+              ),
+            ),
             Card(
               margin: EdgeInsets.fromLTRB(13, 10, 13, 0),
               shape: RoundedRectangleBorder(
@@ -667,7 +763,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Sân nhà - Gara',
+                          Text(titleSanGara,
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold)),
                           Container(
@@ -675,28 +771,32 @@ class _HomePageState extends State<HomePage> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text('Đèn ',
+                                    Text(titleDen,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(denKhach ? "Bật" : "Tắt",
+                                    Text(denKhach ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: denKhach
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Text('Quạt ',
+                                    Text(titleQuat,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(quatKhach ? "Bật" : "Tắt",
+                                    Text(quatKhach ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: quatKhach
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 )
                               ],
@@ -710,7 +810,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Phòng khách',
+                          Text(titlePhongKhach,
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold)),
                           Container(
@@ -718,28 +818,32 @@ class _HomePageState extends State<HomePage> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text('Đèn ',
+                                    Text(titleDen,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(denKhach ? "Bật" : "Tắt",
+                                    Text(denKhach ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: denKhach
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Text('Quạt ',
+                                    Text(titleQuat,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(quatKhach ? "Bật" : "Tắt",
+                                    Text(quatKhach ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: quatKhach
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 )
                               ],
@@ -751,7 +855,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Phòng ngủ',
+                        Text(titlePhongNgu,
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.bold)),
                         Container(
@@ -759,28 +863,32 @@ class _HomePageState extends State<HomePage> {
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Text('Đèn ',
+                                  Text(titleDen,
                                       style: TextStyle(
                                         fontSize: 15,
                                       )),
-                                  Text(denNgu ? "Bật" : "Tắt",
+                                  Text(denNgu ? titleBat : titleTat,
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.green)),
+                                          color: denNgu
+                                              ? Colors.green
+                                              : Colors.red)),
                                 ],
                               ),
                               Row(
                                 children: <Widget>[
-                                  Text('Quạt ',
+                                  Text(titleQuat,
                                       style: TextStyle(
                                         fontSize: 15,
                                       )),
-                                  Text(quatNgu ? "Bật" : "Tắt",
+                                  Text(quatNgu ? titleBat : titleTat,
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.green)),
+                                          color: quatNgu
+                                              ? Colors.green
+                                              : Colors.red)),
                                 ],
                               )
                             ],
@@ -793,7 +901,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Phòng bếp',
+                          Text(titlePhongBep,
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold)),
                           Container(
@@ -801,28 +909,32 @@ class _HomePageState extends State<HomePage> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text('Đèn ',
+                                    Text(titleDen,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(denBep ? "Bật" : "Tắt",
+                                    Text(denBep ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: denBep
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 ),
                                 Row(
                                   children: <Widget>[
-                                    Text('Quạt ',
+                                    Text(titleQuat,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(quatBep ? "Bật" : "Tắt",
+                                    Text(quatBep ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: quatBep
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 )
                               ],
@@ -836,7 +948,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Phòng tắm',
+                          Text(titlePhongTam,
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold)),
                           Container(
@@ -844,15 +956,17 @@ class _HomePageState extends State<HomePage> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text('Đèn ',
+                                    Text(titleDen,
                                         style: TextStyle(
                                           fontSize: 15,
                                         )),
-                                    Text(denTam ? "Bật" : "Tắt",
+                                    Text(denTam ? titleBat : titleTat,
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.green)),
+                                            color: denTam
+                                                ? Colors.green
+                                                : Colors.red)),
                                   ],
                                 ),
                                 Row(
@@ -893,7 +1007,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Nhiệt độ',
+                        Text(titleNhietDo,
                             style: TextStyle(
                               fontSize: 15,
                             )),
@@ -907,7 +1021,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Độ ẩm', style: TextStyle(fontSize: 15)),
+                        Text(titleDoAm, style: TextStyle(fontSize: 15)),
                         Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
@@ -918,7 +1032,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Khí gas', style: TextStyle(fontSize: 15)),
+                        Text(titleKhiGas, style: TextStyle(fontSize: 15)),
                         Text(khiGas,
                             style: TextStyle(
                                 fontSize: 15,
@@ -954,7 +1068,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 15, 0, 5),
               child: Text(
-                'Sân nhà - Gara',
+                titleSanGara,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 15,
@@ -989,7 +1103,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             cuaNha ? cuaMo : cuaDong,
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: cuaNha ? Colors.green : Colors.red),
                           )
                         ],
                       )),
@@ -1015,7 +1131,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             quanAo ? doPhoi : doThu,
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: quanAo ? Colors.green : Colors.red),
                           )
                         ],
                       )),
@@ -1048,7 +1166,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 15, 0, 5),
               child: Text(
-                'Phòng khách',
+                titlePhongKhach,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 15,
@@ -1084,7 +1202,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             denKhach ? denKhachBat : denKhachTat,
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: denKhach ? Colors.green : Colors.red),
                           )
                         ],
                       )),
@@ -1111,7 +1231,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             quatKhach ? quatKhachBat : quatKhachTat,
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: quatKhach ? Colors.green : Colors.red),
                           )
                         ],
                       )),
@@ -1135,7 +1257,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Nhiệt độ',
+                        Text(titleNhietDo,
                             style: TextStyle(
                               fontSize: 15,
                             )),
@@ -1149,7 +1271,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Độ ẩm', style: TextStyle(fontSize: 15)),
+                        Text(titleDoAm, style: TextStyle(fontSize: 15)),
                         Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
@@ -1185,7 +1307,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 15, 0, 5),
               child: Text(
-                'Phòng ngủ',
+                titlePhongNgu,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 15,
@@ -1279,7 +1401,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           denNgu ? denNguBat : denNguTat,
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: denNgu ? Colors.green : Colors.red),
                         )
                       ],
                     )),
@@ -1302,7 +1426,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Nhiệt độ',
+                        Text(titleNhietDo,
                             style: TextStyle(
                               fontSize: 15,
                             )),
@@ -1316,7 +1440,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Độ ẩm', style: TextStyle(fontSize: 15)),
+                        Text(titleDoAm, style: TextStyle(fontSize: 15)),
                         Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
@@ -1352,7 +1476,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 15, 0, 5),
               child: Text(
-                'Sân - Gara',
+                titleSanGara,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 15,
@@ -1446,7 +1570,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           denBep ? denBepBat : denBepTat,
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: denBep ? Colors.green : Colors.red),
                         )
                       ],
                     )),
@@ -1469,7 +1595,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Nhiệt độ',
+                        Text(titleNhietDo,
                             style: TextStyle(
                               fontSize: 15,
                             )),
@@ -1483,7 +1609,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Độ ẩm', style: TextStyle(fontSize: 15)),
+                        Text(titleDoAm, style: TextStyle(fontSize: 15)),
                         Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
@@ -1494,7 +1620,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Khí gas', style: TextStyle(fontSize: 15)),
+                        Text(titleKhiGas, style: TextStyle(fontSize: 15)),
                         Text(khiGas,
                             style: TextStyle(
                                 fontSize: 15,
@@ -1530,7 +1656,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 15, 0, 5),
               child: Text(
-                'Phòng tắm',
+                titlePhongTam,
                 style: TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 15,
@@ -1561,7 +1687,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Text(
                         denTam ? denTamBat : denTamTat,
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: denTam ? Colors.green : Colors.red),
                       )
                     ],
                   )),
@@ -1583,7 +1711,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Nhiệt độ',
+                        Text(titleNhietDo,
                             style: TextStyle(
                               fontSize: 15,
                             )),
@@ -1597,7 +1725,7 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text('Độ ẩm', style: TextStyle(fontSize: 15)),
+                        Text(titleDoAm, style: TextStyle(fontSize: 15)),
                         Text(doAm,
                             style: TextStyle(
                                 fontSize: 15,
