@@ -443,14 +443,14 @@ class _HomePageState extends State<HomePage> {
 
   void checkText(String resultText) {
     switch (resultText) {
-      case "hello":
+      case "turn on the living room lamp":
         {
           denKhach = true;
           updateFirebase();
           print("den khach batttttttttttt");
         }
         break;
-      case "school":
+      case "turn off the living room lamp":
         {
           denKhach = false;
           updateFirebase();
@@ -522,28 +522,39 @@ class _HomePageState extends State<HomePage> {
         }
         break;
 
-      case "a":
+      case "hello":
         {
-          // quatKhach = false;
-          print("AAAAAAAAAAAAAAAAAAAAA");
+          denKhach = true;
+          updateFirebase();
+          print("den khach batttttttttttt");
         }
         break;
-      case "b":
+      case "bye":
         {
-          // denNgu = true;
-          print("BBBBBBBBBBBBBBBBBBB");
+          denKhach = false;
+          updateFirebase();
+          print("Den khach tatttttttttttttttt");
         }
         break;
-      case "c":
+
+      case "hi":
         {
-          // denNgu = false;
-          print("CCCCCCCCCCCCCCCC");
+          denKhach = true;
+          updateFirebase();
+          print("den khach batttttttttttt");
+        }
+        break;
+      case "goodbye":
+        {
+          denKhach = false;
+          updateFirebase();
+          print("Den khach tatttttttttttttttt");
         }
         break;
 
       default:
         {
-          _showDialog(context, "Thông báo", "Câu lệnh không tồn tại");
+          _showDialog(context, "Warning!!!", "The statement does not exist");
         }
     }
   }
