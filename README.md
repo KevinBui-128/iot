@@ -1,16 +1,21 @@
-# du_an_iot
+## IoT
 
-Đây là dự án IoT
+This is the Mobile part of my group's Smart Home project at FPT Polytechnic.
 
-## Getting Started
+#### Screen shot
 
-This project is a starting point for a Flutter application.
+ - Splash Screen
 
-A few resources to get you started if this is your first Flutter project:
+<img src="https://raw.githubusercontent.com/devHaiAnh/Mini-UI/master/Screenshots/art_selling_joon1.png" width="200"/> 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+ - Home Screen
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="https://raw.githubusercontent.com/devHaiAnh/Mini-UI/master/Screenshots/currency_wallet_joon.png" width="200"/>
+
+### Contact
+
+If you have any copyright issues please contact us via email: haianhbui1208@gmail.com
+
+### Getting started
+
+
