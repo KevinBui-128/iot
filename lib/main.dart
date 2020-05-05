@@ -1,4 +1,4 @@
-import 'package:du_an_iot/splashScreen.dart';
+import 'package:du_an_iot/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
