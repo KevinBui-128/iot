@@ -15,6 +15,9 @@ class Utils{
   static String ttQuatBep = "";
   static String ttDenTam = "";
 
+  static bool checkQRRegister = true;
+  static bool checkQRForgot = true;
+
   static bool nguon = false;
   static bool denSan = false;
   static bool cuaNha = false;

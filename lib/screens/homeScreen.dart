@@ -4,7 +4,7 @@ import 'package:du_an_iot/blocs/home_bloc/home_bloc.dart';
 import 'package:du_an_iot/configs/configs.dart';
 import 'package:du_an_iot/widgets/bathroom_screen.dart';
 import 'package:du_an_iot/widgets/bedroom_screen.dart';
-import 'package:du_an_iot/widgets/kitchen_scree.dart';
+import 'package:du_an_iot/widgets/kitchen_screen.dart';
 import 'package:du_an_iot/widgets/livingRoom_screen.dart';
 import 'package:du_an_iot/widgets/stateHome_screen.dart';
 import 'package:du_an_iot/widgets/yardGara_screen.dart';

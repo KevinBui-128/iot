@@ -139,7 +139,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       print(e.toString());
       yield ErrorState(
-          errorTitle: "Thông báo lỗi", errorMessage: "Lỗi ${e.toString()}");
+          errorTitle: "Error Message", errorMessage: "Error ${e.toString()}");
     }
   }
 
