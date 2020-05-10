@@ -472,85 +472,85 @@ class _HomePageState extends State<HomePage> {
         }
         break;
 
-      case "turn on the bedroom fan":
+      case "turn on the bedroom lamp":
         {
           denNgu = true;
           updateFirebase();
           print("bật quạt ngủ");
         }
         break;
-      case "turn off the bedroom fan":
+      case "turn off the bedroom lamp":
         {
           denNgu = false;
           updateFirebase();
           print("bật quạt ngủ");
         }
         break;
-      case "Turn on the bedroom fan":
-        {
-          quatNgu = true;
-          updateFirebase();
-        }
-        break;
-      case "Turn off the bedroom fan":
-        {
-          quatNgu = false;
-          updateFirebase();
-        }
-        break;
+      // case "Turn on the bedroom fan":
+      //   {
+      //     quatNgu = true;
+      //     updateFirebase();
+      //   }
+      //   break;
+      // case "Turn off the bedroom fan":
+      //   {
+      //     quatNgu = false;
+      //     updateFirebase();
+      //   }
+      //   break;
 
-      case "bật quạt khách":
-        {
-          quatKhach = true;
-          updateFirebase();
-        }
-        break;
-      case "tắt quạt khách":
-        {
-          quatKhach = false;
-          updateFirebase();
-        }
-        break;
-      case "bật đèn ngủ":
-        {
-          denNgu = true;
-        }
-        break;
-      case "tắt đèn ngủ":
-        {
-          denNgu = false;
-        }
-        break;
+      // case "bật quạt khách":
+      //   {
+      //     quatKhach = true;
+      //     updateFirebase();
+      //   }
+      //   break;
+      // case "tắt quạt khách":
+      //   {
+      //     quatKhach = false;
+      //     updateFirebase();
+      //   }
+      //   break;
+      // case "bật đèn ngủ":
+      //   {
+      //     denNgu = true;
+      //   }
+      //   break;
+      // case "tắt đèn ngủ":
+      //   {
+      //     denNgu = false;
+      //   }
+      //   break;
 
-      case "hello":
-        {
-          denKhach = true;
-          updateFirebase();
-          print("den khach batttttttttttt");
-        }
-        break;
-      case "bye":
-        {
-          denKhach = false;
-          updateFirebase();
-          print("Den khach tatttttttttttttttt");
-        }
-        break;
+      // case "hello":
+      //   {
+      //     denKhach = true;
+      //     updateFirebase();
+      //     print("den khach batttttttttttt");
+      //   }
+      //   break;
+      // case "bye":
+      //   {
+      //     denKhach = false;
+      //     updateFirebase();
+      //     print("Den khach tatttttttttttttttt");
+      //   }
+      //   break;
 
-      case "hi":
-        {
-          denKhach = true;
-          updateFirebase();
-          print("den khach batttttttttttt");
-        }
-        break;
-      case "goodbye":
-        {
-          denKhach = false;
-          updateFirebase();
-          print("Den khach tatttttttttttttttt");
-        }
-        break;
+      // case "hi":
+      //   {
+      //     denKhach = true;
+      //     updateFirebase();
+      //     print("den khach batttttttttttt");
+      //   }
+      //   break;
+      // case "goodbye":
+      //   {
+      //     denKhach = false;
+      //     updateFirebase();
+      //     print("Den khach tatttttttttttttttt");
+      //   }
+      //   break;
 
       default:
         {
@@ -725,38 +725,38 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Divider(),
-            Container(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-              height: 150,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    vNguon();
-                  },
-                  splashColor: Colors.red,
-                  child: Center(
-                      child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child:
-                            Image.asset(nguon ? batNguon : tatNguon, width: 50),
-                      ),
-                      Text(
-                        nguon ? nguonBat : nguonTat,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: nguon ? Colors.green : Colors.red),
-                      )
-                    ],
-                  )),
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+            //   height: 150,
+            //   child: Card(
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(15.0),
+            //     ),
+            //     child: InkWell(
+            //       onTap: () {
+            //         vNguon();
+            //       },
+            //       splashColor: Colors.red,
+            //       child: Center(
+            //           child: Column(
+            //         mainAxisSize: MainAxisSize.min,
+            //         children: <Widget>[
+            //           Padding(
+            //             padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+            //             child:
+            //                 Image.asset(nguon ? batNguon : tatNguon, width: 50),
+            //           ),
+            //           Text(
+            //             nguon ? nguonBat : nguonTat,
+            //             style: TextStyle(
+            //                 fontSize: 15,
+            //                 color: nguon ? Colors.green : Colors.red),
+            //           )
+            //         ],
+            //       )),
+            //     ),
+            //   ),
+            // ),
             Card(
               margin: EdgeInsets.fromLTRB(13, 10, 13, 0),
               shape: RoundedRectangleBorder(
