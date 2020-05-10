@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:du_an_iot/configs/configs.dart';
 import 'package:du_an_iot/screens/homeScreen.dart';
 import 'package:du_an_iot/streams/loginStream.dart';
 import 'package:du_an_iot/streams/registerStream.dart';
@@ -63,6 +64,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                   "email": event.email.trim(),
                   "name": event.name.trim()
                 });
+                Utils.checkQRRegister = false;
                 _showDialog(event.context, "Message", "Register Success");
               } else {
                 _showDialog(
@@ -91,6 +93,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                       .child("user")
                       .child(event.phone.trim())
                       .update({"password": event.password.trim()});
+                  Utils.checkQRForgot = false;
                   _showDialog(
                       event.context, "Message", "Change Password Success");
                 } else {

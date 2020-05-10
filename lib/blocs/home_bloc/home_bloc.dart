@@ -165,14 +165,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case "turn on the living room fan":
         {
           Utils.quatKhach = true;
-          firebase.update({'QUAT_PHONG_KHACH': '1'});
+          firebase.update({'DEN_PHONG_NGU_2': '1'});
           print("Bật quạt khách");
         }
         break;
       case "turn off the living room fan":
         {
           Utils.quatKhach = false;
-          firebase.update({'QUAT_PHONG_KHACH': '0'});
+          firebase.update({'DEN_PHONG_NGU_2': '0'});
           print("Tắt quạt khách");
         }
         break;
@@ -194,14 +194,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case "Turn on the living room fan":
         {
           Utils.quatKhach = true;
-          firebase.update({'QUAT_PHONG_KHACH': '1'});
+          firebase.update({'DEN_PHONG_NGU_2': '1'});
           print("Bật quạt khách");
         }
         break;
       case "Turn off the living room fan":
         {
           Utils.quatKhach = false;
-          firebase.update({'QUAT_PHONG_KHACH': '0'});
+          firebase.update({'DEN_PHONG_NGU_2': '0'});
           print("Tắt quạt khách");
         }
         break;
@@ -220,18 +220,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           print("bật quạt ngủ");
         }
         break;
-      case "turn on the bedroom fan":
-        {
-          Utils.quatNgu = true;
-          firebase.update({'QUAT_PHONG_NGU': '1'});
-        }
-        break;
-      case "turn off the bedroom fan":
-        {
-          Utils.quatNgu = false;
-          firebase.update({'QUAT_PHONG_NGU': '0'});
-        }
-        break;
+      // case "turn on the bedroom fan":
+      //   {
+      //     Utils.quatNgu = true;
+      //     firebase.update({'QUAT_PHONG_NGU': '1'});
+      //   }
+      //   break;
+      // case "turn off the bedroom fan":
+      //   {
+      //     Utils.quatNgu = false;
+      //     firebase.update({'QUAT_PHONG_NGU': '0'});
+      //   }
+      //   break;
       //
       case "Turn on the bedroom lamp":
         {
@@ -247,126 +247,126 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           print("bật quạt ngủ");
         }
         break;
-      case "Turn on the bedroom fan":
-        {
-          Utils.quatNgu = true;
-          firebase.update({'QUAT_PHONG_NGU': '1'});
-        }
-        break;
-      case "Turn off the bedroom fan":
-        {
-          Utils.quatNgu = false;
-          firebase.update({'QUAT_PHONG_NGU': '0'});
-        }
-        break;
-      // Kitchen
-      case "turn on the kitchen lamp":
-        {
-          Utils.denBep = true;
-          firebase.update({'DEN_PHONG_BEP': '1'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "turn off the kitchen lamp":
-        {
-          Utils.denBep = false;
-          firebase.update({'DEN_PHONG_BEP': '0'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "turn on the kitchen fan":
-        {
-          Utils.quatBep = true;
-          firebase.update({'QUAT_PHONG_BEP': '1'});
-        }
-        break;
-      case "turn off the kitchen fan":
-        {
-          Utils.quatBep = false;
-          firebase.update({'QUAT_PHONG_BEP': '0'});
-        }
-        break;
-      //
-      case "Turn on the kitchen lamp":
-        {
-          Utils.denBep = true;
-          firebase.update({'DEN_PHONG_BEP': '1'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "Turn off the kitchen lamp":
-        {
-          Utils.denBep = false;
-          firebase.update({'DEN_PHONG_BEP': '0'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "Turn on the kitchen fan":
-        {
-          Utils.quatBep = true;
-          firebase.update({'QUAT_PHONG_BEP': '1'});
-        }
-        break;
-      case "Turn off the kitchen fan":
-        {
-          Utils.quatBep = false;
-          firebase.update({'QUAT_PHONG_BEP': '0'});
-        }
-        break;
-      // Bathroom
-      case "turn on the bathroom lamp":
-        {
-          Utils.denTam = true;
-          firebase.update({'DEN_PHONG_TAM': '1'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "turn off the bathroom lamp":
-        {
-          Utils.denTam = false;
-          firebase.update({'DEN_PHONG_TAM': '0'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "turn on the bathroom fan":
-        {
-          Utils.quatTam = true;
-          firebase.update({'QUAT_PHONG_TAM': '1'});
-        }
-        break;
-      case "turn off the bathroom fan":
-        {
-          Utils.quatTam = false;
-          firebase.update({'QUAT_PHONG_TAM': '0'});
-        }
-        break;
-      //
-      case "Turn on the bathroom lamp":
-        {
-          Utils.denTam = true;
-          firebase.update({'DEN_PHONG_TAM': '1'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "Turn off the bathroom lamp":
-        {
-          Utils.denTam = false;
-          firebase.update({'DEN_PHONG_TAM': '0'});
-          print("bật quạt ngủ");
-        }
-        break;
-      case "Turn on the bathroom fan":
-        {
-          Utils.quatTam = true;
-          firebase.update({'QUAT_PHONG_TAM': '1'});
-        }
-        break;
-      case "Turn off the bathroom fan":
-        {
-          Utils.quatTam = false;
-          firebase.update({'QUAT_PHONG_TAM': '0'});
-        }
-        break;
+      // case "Turn on the bedroom fan":
+      //   {
+      //     Utils.quatNgu = true;
+      //     firebase.update({'QUAT_PHONG_NGU': '1'});
+      //   }
+      //   break;
+      // case "Turn off the bedroom fan":
+      //   {
+      //     Utils.quatNgu = false;
+      //     firebase.update({'QUAT_PHONG_NGU': '0'});
+      //   }
+      //   break;
+      // // Kitchen
+      // case "turn on the kitchen lamp":
+      //   {
+      //     Utils.denBep = true;
+      //     firebase.update({'DEN_PHONG_BEP': '1'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "turn off the kitchen lamp":
+      //   {
+      //     Utils.denBep = false;
+      //     firebase.update({'DEN_PHONG_BEP': '0'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "turn on the kitchen fan":
+      //   {
+      //     Utils.quatBep = true;
+      //     firebase.update({'QUAT_PHONG_BEP': '1'});
+      //   }
+      //   break;
+      // case "turn off the kitchen fan":
+      //   {
+      //     Utils.quatBep = false;
+      //     firebase.update({'QUAT_PHONG_BEP': '0'});
+      //   }
+      //   break;
+      // //
+      // case "Turn on the kitchen lamp":
+      //   {
+      //     Utils.denBep = true;
+      //     firebase.update({'DEN_PHONG_BEP': '1'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "Turn off the kitchen lamp":
+      //   {
+      //     Utils.denBep = false;
+      //     firebase.update({'DEN_PHONG_BEP': '0'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "Turn on the kitchen fan":
+      //   {
+      //     Utils.quatBep = true;
+      //     firebase.update({'QUAT_PHONG_BEP': '1'});
+      //   }
+      //   break;
+      // case "Turn off the kitchen fan":
+      //   {
+      //     Utils.quatBep = false;
+      //     firebase.update({'QUAT_PHONG_BEP': '0'});
+      //   }
+      //   break;
+      // // Bathroom
+      // case "turn on the bathroom lamp":
+      //   {
+      //     Utils.denTam = true;
+      //     firebase.update({'DEN_PHONG_TAM': '1'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "turn off the bathroom lamp":
+      //   {
+      //     Utils.denTam = false;
+      //     firebase.update({'DEN_PHONG_TAM': '0'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "turn on the bathroom fan":
+      //   {
+      //     Utils.quatTam = true;
+      //     firebase.update({'QUAT_PHONG_TAM': '1'});
+      //   }
+      //   break;
+      // case "turn off the bathroom fan":
+      //   {
+      //     Utils.quatTam = false;
+      //     firebase.update({'QUAT_PHONG_TAM': '0'});
+      //   }
+      //   break;
+      // //
+      // case "Turn on the bathroom lamp":
+      //   {
+      //     Utils.denTam = true;
+      //     firebase.update({'DEN_PHONG_TAM': '1'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "Turn off the bathroom lamp":
+      //   {
+      //     Utils.denTam = false;
+      //     firebase.update({'DEN_PHONG_TAM': '0'});
+      //     print("bật quạt ngủ");
+      //   }
+      //   break;
+      // case "Turn on the bathroom fan":
+      //   {
+      //     Utils.quatTam = true;
+      //     firebase.update({'QUAT_PHONG_TAM': '1'});
+      //   }
+      //   break;
+      // case "Turn off the bathroom fan":
+      //   {
+      //     Utils.quatTam = false;
+      //     firebase.update({'QUAT_PHONG_TAM': '0'});
+      //   }
+      //   break;
       default:
         {
           _showDialog(context, "Warning!!!", "The statement does not exist");

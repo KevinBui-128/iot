@@ -168,7 +168,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         0, screenHeight * 0.01, 0, screenHeight * 0.05),
                     child: Row(
                       children: <Widget>[
-                        Text("Check QR", style: TextStyle(fontSize: 15)),
+                        Container(
+                            width: screenWidth * 0.2,
+                            height: screenWidth * 0.07,
+                            decoration: BoxDecoration(
+                                color: Colors.red[400],
+                                borderRadius: BorderRadius.circular(24)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text("Scan ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white)),
+                                Icon(Icons.center_focus_weak,
+                                    color: Colors.white)
+                              ],
+                            )),
                         SizedBox(width: screenWidth * 0.02),
                         Container(
                           width: screenWidth * 0.07,

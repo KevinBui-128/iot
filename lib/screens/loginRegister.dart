@@ -89,19 +89,19 @@ class _LoginRegisterPageState extends State<LoginRegisterPage>
                         children: <Widget>[
                           Expanded(
                               flex: 2,
-                              child: Hero(
-                                tag: "text",
-                                child: Shimmer.fromColors(
-                                  period: Duration(milliseconds: 1500),
-                                  baseColor: Color(0xff7f00ff),
-                                  highlightColor: Color(0xffe100ff),
-                                  child: Container(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Center(
+                              child: Shimmer.fromColors(
+                                period: Duration(milliseconds: 1500),
+                                baseColor: Color(0xff7f00ff),
+                                highlightColor: Color(0xffe100ff),
+                                child: Container(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Center(
+                                    child: Hero(
+                                      tag: "text",
                                       child: Text(
                                         "My things",
                                         style: TextStyle(
-                                            fontSize: 30,
+                                            fontSize: 40,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Pacifico',
                                             shadows: <Shadow>[

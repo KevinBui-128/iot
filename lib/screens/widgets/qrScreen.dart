@@ -79,11 +79,35 @@ class _QrScreenState extends State<QrScreen> {
         if (scanData == Utils.dataQR) {
           if (widget.screen == "register") {
             Utils.checkQRRegister = true;
+          _showDialog(context, "Message", "Correct QR");
+            // Navigator.pop(context);
           } else {
             Utils.checkQRForgot = true;
+          _showDialog(context, "Message", "Correct QR");
+            // Navigator.pop(context);
           }
+        } else {
+          _showDialog(context, "Message", "Wrong QR");
         }
       });
     });
+  }
+
+  _showDialog(BuildContext mainContext, String title, String message) async {
+    await showDialog(
+      context: mainContext,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Ok"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
   }
 }

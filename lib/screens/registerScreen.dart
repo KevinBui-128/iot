@@ -154,22 +154,39 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => QrScreen(screen)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => QrScreen(screen)));
                 },
                 child: Container(
                     padding: EdgeInsets.fromLTRB(
                         0, screenHeight * 0.01, 0, screenHeight * 0.05),
                     child: Row(
                       children: <Widget>[
-                        Text("Check QR", style: TextStyle(fontSize: 15)),
+                        Container(
+                            width: screenWidth * 0.2,
+                            height: screenWidth * 0.07,
+                            decoration: BoxDecoration(
+                                color: Colors.red[400],
+                                borderRadius: BorderRadius.circular(24)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text("Scan ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white)),
+                                Icon(Icons.center_focus_weak,
+                                    color: Colors.white)
+                              ],
+                            )),
                         SizedBox(width: screenWidth * 0.02),
                         Container(
                           width: screenWidth * 0.07,
                           height: screenWidth * 0.07,
                           decoration: BoxDecoration(border: Border.all()),
                           child: Center(
-                            child: Utils.checkQRRegister
+                            child: Utils.checkQRForgot
                                 ? Icon(Icons.done, color: Colors.red, size: 18)
                                 : Container(),
                           ),
