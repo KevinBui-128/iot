@@ -14,9 +14,7 @@ class _StateHomePageState extends State<StateHomePage> {
     return BlocProvider(
       create: (context) => HomeBloc(),
       child: BlocListener<HomeBloc, HomeState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) {},
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             return Padding(
@@ -85,118 +83,108 @@ class _StateHomePageState extends State<StateHomePage> {
                         width: double.infinity,
                         height: 120,
                         color: Colors.white12,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          // scrollDirection: Axis.horizontal,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text(Utils.titleSanGara,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold)),
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleDen,
-                                                style: TextStyle(
+                            Column(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Text(Utils.titleSanGara,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                                Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Text(Utils.titleDen,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              )),
+                                          Text(
+                                              Utils.denSan
+                                                  ? Utils.titleBat
+                                                  : Utils.titleTat,
+                                              style: TextStyle(
                                                   fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.denKhach
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.denKhach
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleQuat,
-                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Utils.denSan
+                                                      ? Colors.green
+                                                      : Colors.red)),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Text('',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              )),
+                                          Text("",
+                                              style: TextStyle(
                                                   fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.quatKhach
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.quatKhach
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text(Utils.titlePhongKhach,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold)),
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleDen,
-                                                style: TextStyle(
+                            Column(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(Utils.titlePhongKhach,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                                Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Text(Utils.titleDen,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              )),
+                                          Text(
+                                              Utils.denKhach
+                                                  ? Utils.titleBat
+                                                  : Utils.titleTat,
+                                              style: TextStyle(
                                                   fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.denKhach
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.denKhach
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleQuat,
-                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Utils.denKhach
+                                                      ? Colors.green
+                                                      : Colors.red)),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Text(Utils.titleQuat,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              )),
+                                          Text(
+                                              Utils.quatKhach
+                                                  ? Utils.titleBat
+                                                  : Utils.titleTat,
+                                              style: TextStyle(
                                                   fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.quatKhach
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.quatKhach
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Utils.quatKhach
+                                                      ? Colors.green
+                                                      : Colors.red)),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -226,134 +214,148 @@ class _StateHomePageState extends State<StateHomePage> {
                                                       : Colors.red)),
                                         ],
                                       ),
+                                      // Row(
+                                      //   children: <Widget>[
+                                      //     Text(Utils.titleQuat,
+                                      //         style: TextStyle(
+                                      //           fontSize: 15,
+                                      //         )),
+                                      //     Text(
+                                      //         Utils.quatNgu
+                                      //             ? Utils.titleBat
+                                      //             : Utils.titleTat,
+                                      //         style: TextStyle(
+                                      //             fontSize: 15,
+                                      //             fontWeight: FontWeight.bold,
+                                      //             color: Utils.quatNgu
+                                      //                 ? Colors.green
+                                      //                 : Colors.red)),
+                                      //   ],
+                                      // ),
+
                                       Row(
                                         children: <Widget>[
-                                          Text(Utils.titleQuat,
+                                          Text('',
                                               style: TextStyle(
                                                 fontSize: 15,
                                               )),
-                                          Text(
-                                              Utils.quatNgu
-                                                  ? Utils.titleBat
-                                                  : Utils.titleTat,
+                                          Text("",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Utils.quatNgu
-                                                      ? Colors.green
-                                                      : Colors.red)),
+                                                  color: Colors.green)),
                                         ],
-                                      )
+                                      ),
                                     ],
                                   ),
                                 )
                               ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text(Utils.titlePhongBep,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold)),
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleDen,
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.denBep
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.denBep
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleQuat,
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.quatBep
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.quatBep
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text(Utils.titlePhongTam,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold)),
-                                  Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(Utils.titleDen,
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                )),
-                                            Text(
-                                                Utils.denTam
-                                                    ? Utils.titleBat
-                                                    : Utils.titleTat,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Utils.denTam
-                                                        ? Colors.green
-                                                        : Colors.red)),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Text('',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                )),
-                                            Text("",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.green)),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
+                            // Padding(
+                            //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            //   child: Column(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceEvenly,
+                            //     children: <Widget>[
+                            //       Text(Utils.titlePhongBep,
+                            //           style: TextStyle(
+                            //               fontSize: 15,
+                            //               fontWeight: FontWeight.bold)),
+                            //       Container(
+                            //         child: Column(
+                            //           children: <Widget>[
+                            //             Row(
+                            //               children: <Widget>[
+                            //                 Text(Utils.titleDen,
+                            //                     style: TextStyle(
+                            //                       fontSize: 15,
+                            //                     )),
+                            //                 Text(
+                            //                     Utils.denBep
+                            //                         ? Utils.titleBat
+                            //                         : Utils.titleTat,
+                            //                     style: TextStyle(
+                            //                         fontSize: 15,
+                            //                         fontWeight: FontWeight.bold,
+                            //                         color: Utils.denBep
+                            //                             ? Colors.green
+                            //                             : Colors.red)),
+                            //               ],
+                            //             ),
+                            //             Row(
+                            //               children: <Widget>[
+                            //                 Text(Utils.titleQuat,
+                            //                     style: TextStyle(
+                            //                       fontSize: 15,
+                            //                     )),
+                            //                 Text(
+                            //                     Utils.quatBep
+                            //                         ? Utils.titleBat
+                            //                         : Utils.titleTat,
+                            //                     style: TextStyle(
+                            //                         fontSize: 15,
+                            //                         fontWeight: FontWeight.bold,
+                            //                         color: Utils.quatBep
+                            //                             ? Colors.green
+                            //                             : Colors.red)),
+                            //               ],
+                            //             )
+                            //           ],
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            //   child: Column(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceEvenly,
+                            //     children: <Widget>[
+                            //       Text(Utils.titlePhongTam,
+                            //           style: TextStyle(
+                            //               fontSize: 15,
+                            //               fontWeight: FontWeight.bold)),
+                            //       Container(
+                            //         child: Column(
+                            //           children: <Widget>[
+                            //             Row(
+                            //               children: <Widget>[
+                            //                 Text(Utils.titleDen,
+                            //                     style: TextStyle(
+                            //                       fontSize: 15,
+                            //                     )),
+                            //                 Text(
+                            //                     Utils.denTam
+                            //                         ? Utils.titleBat
+                            //                         : Utils.titleTat,
+                            //                     style: TextStyle(
+                            //                         fontSize: 15,
+                            //                         fontWeight: FontWeight.bold,
+                            //                         color: Utils.denTam
+                            //                             ? Colors.green
+                            //                             : Colors.red)),
+                            //               ],
+                            //             ),
+                            //             Row(
+                            //               children: <Widget>[
+                            //                 Text('',
+                            //                     style: TextStyle(
+                            //                       fontSize: 15,
+                            //                     )),
+                            //                 Text("",
+                            //                     style: TextStyle(
+                            //                         fontSize: 15,
+                            //                         fontWeight: FontWeight.bold,
+                            //                         color: Colors.green)),
+                            //               ],
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // )
                           ],
                         ),
                       ),

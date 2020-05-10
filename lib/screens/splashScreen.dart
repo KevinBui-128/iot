@@ -1,5 +1,4 @@
 import 'package:du_an_iot/screens/loginRegister.dart';
-import 'package:du_an_iot/screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shimmer/shimmer.dart';

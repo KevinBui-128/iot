@@ -2,6 +2,8 @@ class Utils {
   static String dataQR = "Smart Home IoT Fpt";
   static String resultText = "";
 
+  static String name = "";
+
   static String nhietDo = "";
   static String doAm = "";
   static String ttDenSan = "";
@@ -19,6 +21,8 @@ class Utils {
   static bool checkQRRegister = false;
   static bool checkQRForgot = false;
   static bool voiceListen = false;
+
+  static bool showText = false;
 
   static bool nguon = false;
   static bool denSan = false;

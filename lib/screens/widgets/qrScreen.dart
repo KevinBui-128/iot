@@ -1,3 +1,4 @@
+import 'package:connection_status_bar/connection_status_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
@@ -16,6 +17,7 @@ class _QrScreenState extends State<QrScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -61,6 +63,21 @@ class _QrScreenState extends State<QrScreen> {
               ),
             ),
           ),
+          Positioned(
+            top: screenHeight * 0.2,
+            left: 0,
+            right: 0,
+            child:
+                // Container(
+                //     width: screenWidth,
+                //     height: screenHeight * 0.1,
+                //     // color: Colors.yellow,
+                //     child: thongBao("Correct QRbbbbbbbbbbbbb"))
+
+                Utils.showText
+                    ? thongBao("Correct QR")
+                    : Container(color: Colors.transparent),
+          ),
         ],
       ),
     );
@@ -79,35 +96,31 @@ class _QrScreenState extends State<QrScreen> {
         if (scanData == Utils.dataQR) {
           if (widget.screen == "register") {
             Utils.checkQRRegister = true;
-          _showDialog(context, "Message", "Correct QR");
-            // Navigator.pop(context);
           } else {
             Utils.checkQRForgot = true;
-          _showDialog(context, "Message", "Correct QR");
-            // Navigator.pop(context);
           }
-        } else {
-          _showDialog(context, "Message", "Wrong QR");
+          Utils.showText = true;
+        }else{
+          Utils.checkQRRegister = false;
+          Utils.checkQRForgot = false;
+          Utils.showText = false;
         }
       });
     });
   }
 
-  _showDialog(BuildContext mainContext, String title, String message) async {
-    await showDialog(
-      context: mainContext,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: <Widget>[
-          FlatButton(
-            child: Text("Ok"),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
-      ),
-    );
+  Widget thongBao(String text) {
+    return Container(
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: ConnectionStatusBar(
+          height: MediaQuery.of(context).size.height * 0.05,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.green[500],
+          endOffset: const Offset(0.0, 0.0),
+          beginOffset: const Offset(0.0, -1.0),
+          animationDuration: Duration(microseconds: 200),
+          title:
+              Text(text, style: TextStyle(color: Colors.white, fontSize: 18)),
+        ));
   }
 }

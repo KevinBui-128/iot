@@ -130,6 +130,11 @@ class _HomePageState extends State<HomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        title: Text("The total control house"),
+        centerTitle: true,
+        leading: Container(),
+      ),
       body: Container(
         child: Stack(
           children: <Widget>[
@@ -141,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                 right: 0,
                 child: voice(screenWidth, screenHeight)),
             Positioned(
-                bottom: 0,
+                bottom: screenHeight * 0.05,
                 left: 0,
                 right: 0,
                 child: thongBao(screenWidth, screenHeight)),
@@ -157,20 +162,18 @@ class _HomePageState extends State<HomePage> {
       left: true,
       right: true,
       child: Container(
+        padding: EdgeInsets.only(bottom: screenHeight*0.2),
         height: screenHeight,
         color: Colors.blue[50],
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 10.0),
               StateHomePage(),
-              // YardGatePage(),
+              YardGatePage(),
               LivingRoomPage(),
               BedroomPage(),
               // KitchenPage(),
               // BathroomPage(),
-              const SizedBox(height: 50.0),
             ],
           ),
         ),
@@ -186,7 +189,7 @@ class _HomePageState extends State<HomePage> {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             return Container(
-              height: screenHeight * 0.08,
+              height: screenHeight * 0.1,
               color: Colors.white,
               child: Center(
                 child: Row(
@@ -219,6 +222,7 @@ class _HomePageState extends State<HomePage> {
                           size: 40,
                         ),
                         onPressed: () {
+                          Utils.voiceListen = true;
                           BlocProvider.of<HomeBloc>(context)
                               .add(PressBtnCheckVoiceEvent(context: context));
                         },
@@ -233,6 +237,7 @@ class _HomePageState extends State<HomePage> {
                           size: 30,
                         ),
                         onPressed: () {
+                          Utils.voiceListen = false;
                           BlocProvider.of<HomeBloc>(context)
                               .add(PressBtnUncheckVoiceEvent());
                         },
@@ -250,17 +255,17 @@ class _HomePageState extends State<HomePage> {
 
   Widget thongBao(double screenWidth, screenHeight) {
     return Container(
-      height: screenHeight * 0.1,
+      height: screenHeight * 0.05,
       child: Utils.voiceListen
           ? ConnectionStatusBar(
               height: screenHeight * 0.05,
               width: screenWidth,
-              color: Colors.greenAccent,
+              color: Colors.green[500],
               endOffset: const Offset(0.0, 0.0),
               beginOffset: const Offset(0.0, -1.0),
               animationDuration: Duration(microseconds: 200),
               title: Text("You can say",
-                  style: TextStyle(color: Colors.white, fontSize: 14)),
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
             )
           : Container(color: Colors.transparent),
     );

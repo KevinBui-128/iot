@@ -26,9 +26,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is PressBtnLampYardEvent) {
         Utils.denSan = !Utils.denSan;
         if (Utils.denSan == true) {
-          // firebase.update({'CUA_NHA': '1'});
+          firebase.update({'DEN_PHONG_BEP': '1'});
         } else {
-          // firebase.update({'CUA_NHA': '0'});
+          firebase.update({'DEN_PHONG_BEP': '0'});
         }
         yield LampYardState();
       }
@@ -123,7 +123,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // Voice
       if (event is PressBtnCheckVoiceEvent) {
         speechToTextPlugins.listen().then((onValue) {
-          Utils.voiceListen = true;
           Utils.resultText = onValue[0];
           checkText(Utils.resultText, event.context);
           print(Utils.resultText);
@@ -132,7 +131,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
       if (event is PressBtnUncheckVoiceEvent) {
         speechToTextPlugins.cancel().then((onValue) {
-          Utils.voiceListen = false;
           Utils.resultText = "";
           print(onValue);
         });
@@ -147,29 +145,87 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void checkText(String resultText, BuildContext context) {
     switch (resultText) {
+      // Yard - Gara
+      case "turn on the lamp in the yard":
+        {
+          Utils.denSan = true;
+          firebase.update({'DEN_PHONG_BEP': '1'});
+          print("den khach batttttttttttt");
+        }
+        break;
+      case "turn off the lamp in the yard":
+        {
+          Utils.denSan = false;
+          firebase.update({'DEN_PHONG_BEP': '0'});
+          print("Den khach tatttttttttttttttt");
+        }
+        break;
+      // case "turn on the living room fan":
+      //   {
+      //     Utils.quatKhach = true;
+      //     firebase.update({'DEN_PHONG_NGU_2': '1'});
+      //     print("Bật quạt khách");
+      //   }
+      //   break;
+      // case "turn off the living room fan":
+      //   {
+      //     Utils.quatKhach = false;
+      //     firebase.update({'DEN_PHONG_NGU_2': '0'});
+      //     print("Tắt quạt khách");
+      //   }
+      //   break;
+      //
+      case "Turn on the lamp in the yard":
+        {
+          Utils.denSan = true;
+          firebase.update({'DEN_PHONG_BEP': '1'});
+          print("den khach batttttttttttt");
+        }
+        break;
+      case "Turn off the lamp in the yard":
+        {
+          Utils.denSan = false;
+          firebase.update({'DEN_PHONG_BEP': '0'});
+          print("Den khach tatttttttttttttttt");
+        }
+        break;
+      // case "Turn on the living room fan":
+      //   {
+      //     Utils.quatKhach = true;
+      //     firebase.update({'DEN_PHONG_NGU_2': '1'});
+      //     print("Bật quạt khách");
+      //   }
+      //   break;
+      // case "Turn off the living room fan":
+      //   {
+      //     Utils.quatKhach = false;
+      //     firebase.update({'DEN_PHONG_NGU_2': '0'});
+      //     print("Tắt quạt khách");
+      //   }
+      //   break;
       // Living
-      case "turn on the living room lamp":
+      case "turn on the lamp in the living room":
         {
           Utils.denKhach = true;
           firebase.update({'DEN_PHONG_KHACH': '1'});
           print("den khach batttttttttttt");
         }
         break;
-      case "turn off the living room lamp":
+      case "turn off the lamp in the living room":
         {
           Utils.denKhach = false;
           firebase.update({'DEN_PHONG_KHACH': '0'});
           print("Den khach tatttttttttttttttt");
         }
         break;
-      case "turn on the living room fan":
+      case "turn on the fan in the living room":
         {
           Utils.quatKhach = true;
           firebase.update({'DEN_PHONG_NGU_2': '1'});
           print("Bật quạt khách");
         }
         break;
-      case "turn off the living room fan":
+      case "turn off the fan in the living room":
         {
           Utils.quatKhach = false;
           firebase.update({'DEN_PHONG_NGU_2': '0'});
@@ -177,28 +233,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
         break;
       //
-      case "Turn on the living room lamp":
+      case "Turn on the lamp in the living room":
         {
           Utils.denKhach = true;
           firebase.update({'DEN_PHONG_KHACH': '1'});
           print("den khach batttttttttttt");
         }
         break;
-      case "Turn off the living room lamp":
+      case "Turn off the lamp in the living room":
         {
           Utils.denKhach = false;
           firebase.update({'DEN_PHONG_KHACH': '0'});
           print("Den khach tatttttttttttttttt");
         }
         break;
-      case "Turn on the living room fan":
+      case "Turn on the fan in the living room":
         {
           Utils.quatKhach = true;
           firebase.update({'DEN_PHONG_NGU_2': '1'});
           print("Bật quạt khách");
         }
         break;
-      case "Turn off the living room fan":
+      case "Turn off the fan in the living room":
         {
           Utils.quatKhach = false;
           firebase.update({'DEN_PHONG_NGU_2': '0'});
@@ -206,14 +262,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
         break;
       // Bedroom
-      case "turn on the bedroom lamp":
+      case "turn on the lamp in the bedroom":
         {
           Utils.denNgu = true;
           firebase.update({'DEN_PHONG_NGU': '1'});
           print("bật quạt ngủ");
         }
         break;
-      case "turn off the bedroom lamp":
+      case "turn off the lamp in the bedroom":
         {
           Utils.denNgu = false;
           firebase.update({'DEN_PHONG_NGU': '0'});
@@ -233,14 +289,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       //   }
       //   break;
       //
-      case "Turn on the bedroom lamp":
+      case "Turn on the lamp in the bedroom":
         {
           Utils.denNgu = true;
           firebase.update({'DEN_PHONG_NGU': '1'});
           print("bật quạt ngủ");
         }
         break;
-      case "Turn off the bedroom lamp":
+      case "Turn off the lamp in the bedroom":
         {
           Utils.denNgu = false;
           firebase.update({'DEN_PHONG_NGU': '0'});

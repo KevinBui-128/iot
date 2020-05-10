@@ -32,6 +32,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               if (null != dataSnapshot.value[event.phone.trim()]) {
                 if (event.password.trim() ==
                     dataSnapshot.value[event.phone.trim()]["password"]) {
+                  Utils.name =
+                      dataSnapshot.value[event.phone.trim()]["name"];
                   Navigator.push(event.context,
                       MaterialPageRoute(builder: (context) => HomePage()));
                 } else {
@@ -65,6 +67,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                   "name": event.name.trim()
                 });
                 Utils.checkQRRegister = false;
+                Utils.showText = false;
                 _showDialog(event.context, "Message", "Register Success");
               } else {
                 _showDialog(
@@ -94,6 +97,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                       .child(event.phone.trim())
                       .update({"password": event.password.trim()});
                   Utils.checkQRForgot = false;
+                  Utils.showText = false;
                   _showDialog(
                       event.context, "Message", "Change Password Success");
                 } else {

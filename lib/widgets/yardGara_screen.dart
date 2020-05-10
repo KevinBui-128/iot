@@ -45,74 +45,112 @@ class _YardGatePageState extends State<YardGatePage> {
                     Divider(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-                      child: GridView.count(
-                        shrinkWrap: true,
-                        crossAxisCount: 2,
-                        // physics: (),
-                        children: <Widget>[
-                          Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<HomeBloc>(context)
-                                    .add(PressBtnDoorYardEvent());
-                              },
-                              splashColor: Colors.red,
-                              child: Center(
-                                  child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                    child: Image.asset(
-                                        Utils.cuaNha
-                                            ? Utils.moCua
-                                            : Utils.dongCua,
-                                        width: 50),
-                                  ),
-                                  Text(
-                                    Utils.cuaNha ? Utils.cuaMo : Utils.cuaDong,
-                                    style: TextStyle(fontSize: 15),
-                                  )
-                                ],
-                              )),
-                            ),
+                      child:
+                          // GridView.count(
+                          //   shrinkWrap: true,
+                          //   crossAxisCount: 2,
+                          //   // physics: (),
+                          //   children: <Widget>[
+                          //     Card(
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(15.0),
+                          //       ),
+                          //       child: InkWell(
+                          //         onTap: () {
+                          //           BlocProvider.of<HomeBloc>(context)
+                          //               .add(PressBtnDoorYardEvent());
+                          //         },
+                          //         splashColor: Colors.red,
+                          //         child: Center(
+                          //             child: Column(
+                          //           mainAxisSize: MainAxisSize.min,
+                          //           children: <Widget>[
+                          //             Padding(
+                          //               padding:
+                          //                   const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          //               child: Image.asset(
+                          //                   Utils.cuaNha
+                          //                       ? Utils.moCua
+                          //                       : Utils.dongCua,
+                          //                   width: 50),
+                          //             ),
+                          //             Text(
+                          //               Utils.cuaNha ? Utils.cuaMo : Utils.cuaDong,
+                          //               style: TextStyle(fontSize: 15),
+                          //             )
+                          //           ],
+                          //         )),
+                          //       ),
+                          //     ),
+                          //     Card(
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(15.0),
+                          //       ),
+                          //       child: InkWell(
+                          //         onTap: () {
+                          //           BlocProvider.of<HomeBloc>(context)
+                          //               .add(PressBtnClothesYardEvent());
+                          //         },
+                          //         splashColor: Colors.red,
+                          //         child: Center(
+                          //             child: Column(
+                          //           mainAxisSize: MainAxisSize.min,
+                          //           children: <Widget>[
+                          //             Padding(
+                          //               padding:
+                          //                   const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                          //               child: Image.asset(
+                          //                   Utils.quanAo
+                          //                       ? Utils.phoiDo
+                          //                       : Utils.thuDo,
+                          //                   width: 50),
+                          //             ),
+                          //             Text(
+                          //               Utils.quanAo ? Utils.doPhoi : Utils.doThu,
+                          //               style: TextStyle(fontSize: 15),
+                          //             )
+                          //           ],
+                          //         )),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          Container(
+                        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+                        height: 150,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
-                          Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                BlocProvider.of<HomeBloc>(context)
-                                    .add(PressBtnClothesYardEvent());
-                              },
-                              splashColor: Colors.red,
-                              child: Center(
-                                  child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                    child: Image.asset(
-                                        Utils.quanAo
-                                            ? Utils.phoiDo
-                                            : Utils.thuDo,
-                                        width: 50),
-                                  ),
-                                  Text(
-                                    Utils.quanAo ? Utils.doPhoi : Utils.doThu,
-                                    style: TextStyle(fontSize: 15),
-                                  )
-                                ],
-                              )),
-                            ),
+                          child: InkWell(
+                            onTap: () {
+                              BlocProvider.of<HomeBloc>(context)
+                                  .add(PressBtnLampYardEvent());
+                            },
+                            splashColor: Colors.red,
+                            child: Center(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                  child: Image.asset(
+                                      Utils.denSan
+                                          ? Utils.batDenSan
+                                          : Utils.tatDenSan,
+                                      width: 50),
+                                ),
+                                Text(
+                                  Utils.denSan
+                                      ? Utils.denSanBat
+                                      : Utils.denSanTat,
+                                  style: TextStyle(fontSize: 15),
+                                )
+                              ],
+                            )),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20.0),

@@ -18,12 +18,25 @@ class _LoginRegisterPageState extends State<LoginRegisterPage>
   void initState() {
     _controller = TabController(length: 2, vsync: this);
     initPlatformState();
+    initPlatformStateCamera();
     super.initState();
   }
 
   // permision app
   Future<void> initPlatformState() async {
     requestPermissionMicrophone();
+    String platformVersion;
+    try {} on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
+  }
+
+  Future<void> initPlatformStateCamera() async {
     requestPermissionCamera();
     String platformVersion;
     try {} on PlatformException {
@@ -101,7 +114,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage>
                                       child: Text(
                                         "My things",
                                         style: TextStyle(
-                                            fontSize: 40,
+                                            fontSize: 35,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Pacifico',
                                             shadows: <Shadow>[

@@ -191,7 +191,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           decoration: BoxDecoration(border: Border.all()),
                           child: Center(
                             child: Utils.checkQRForgot
-                                ? Icon(Icons.done, color: Colors.red, size: 18)
+                                ? Icon(Icons.done, color: Colors.red, size: 20)
                                 : Container(),
                           ),
                         )

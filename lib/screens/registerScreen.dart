@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
       key: registerKey,
       body: Container(
         padding: EdgeInsets.fromLTRB(
-            screenWidth * 0.05, screenHeight * 0.01, screenWidth * 0.05, 0),
+            screenWidth * 0.05, screenHeight * 0.03, screenWidth * 0.05, 0),
         color: Colors.white30,
         height: screenHeight * 0.8,
         child: SingleChildScrollView(
@@ -186,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: screenWidth * 0.07,
                           decoration: BoxDecoration(border: Border.all()),
                           child: Center(
-                            child: Utils.checkQRForgot
+                            child: Utils.checkQRRegister
                                 ? Icon(Icons.done, color: Colors.red, size: 18)
                                 : Container(),
                           ),
