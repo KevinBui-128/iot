@@ -123,6 +123,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // Voice
       if (event is PressBtnCheckVoiceEvent) {
         speechToTextPlugins.listen().then((onValue) {
+          Utils.voiceListen = true;
           Utils.resultText = onValue[0];
           checkText(Utils.resultText, event.context);
           print(Utils.resultText);
@@ -131,6 +132,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
       if (event is PressBtnUncheckVoiceEvent) {
         speechToTextPlugins.cancel().then((onValue) {
+          Utils.voiceListen = false;
           Utils.resultText = "";
           print(onValue);
         });

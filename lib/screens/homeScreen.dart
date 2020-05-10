@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connection_status_bar/connection_status_bar.dart';
 import 'package:du_an_iot/blocs/home_bloc/home_bloc.dart';
 import 'package:du_an_iot/configs/configs.dart';
 import 'package:du_an_iot/widgets/bathroom_screen.dart';
@@ -10,9 +11,7 @@ import 'package:du_an_iot/widgets/stateHome_screen.dart';
 import 'package:du_an_iot/widgets/yardGara_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,8 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _platformVersion = 'vi_VN';
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -34,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       BathroomPage();
     });
   }
+
   // update data
   void updateState() {
     if (Utils.ttCuaNha == "1") {
@@ -76,6 +74,7 @@ class _HomePageState extends State<HomePage> {
       print('update statesss');
     }
   }
+
   // read data
   void readFirebase() {
     FirebaseDatabase.instance
@@ -101,34 +100,10 @@ class _HomePageState extends State<HomePage> {
       });
     });
   }
-  // check permission voice
-  Future<void> initPlatformState() async {
-    requestPermission();
-    String platformVersion;
-    try {} on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  void requestPermission() async {
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.microphone);
-
-    if (permission != PermissionStatus.granted) {
-      await PermissionHandler()
-          .requestPermissions([PermissionGroup.microphone]);
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
 
     Timer.periodic(Duration(microseconds: 1000), (timer) {
       readFirebase();
@@ -144,69 +119,125 @@ class _HomePageState extends State<HomePage> {
         listener: (context, state) {},
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            return Scaffold(
-              body: Container(
-                child: Column(
+            return bodyPage();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget bodyPage() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: Container(
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+                top: 0, left: 0, right: 0, child: giaoDienChung(screenHeight)),
+            Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: voice(screenWidth, screenHeight)),
+            Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: thongBao(screenWidth, screenHeight)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget giaoDienChung(double screenHeight) {
+    return SafeArea(
+      top: true,
+      left: true,
+      right: true,
+      child: Container(
+        height: screenHeight,
+        color: Colors.blue[50],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 10.0),
+              StateHomePage(),
+              // YardGatePage(),
+              LivingRoomPage(),
+              BedroomPage(),
+              // KitchenPage(),
+              // BathroomPage(),
+              const SizedBox(height: 50.0),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget voice(double screenWidth, screenHeight) {
+    return BlocProvider(
+      create: (context) => HomeBloc(),
+      child: BlocListener<HomeBloc, HomeState>(
+        listener: (context, state) {},
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return Container(
+              height: screenHeight * 0.08,
+              color: Colors.white,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Flexible(flex: 18, child: giaoDienChung()),
                     Flexible(
-                        flex: 2,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Flexible(
-                                  flex: 6,
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black12,
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 8.0,
-                                      horizontal: 12.0,
-                                    ),
-                                    child: Text(
-                                      Utils.resultText,
-                                      style: TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )),
-                              Flexible(
-                                flex: 2,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.mic,
-                                    color: Colors.blueAccent,
-                                    size: 40,
-                                  ),
-                                  onPressed: () {
-                                    BlocProvider.of<HomeBloc>(context).add(
-                                        PressBtnCheckVoiceEvent(
-                                            context: context));
-                                  },
-                                ),
-                              ),
-                              Flexible(
-                                flex: 2,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    BlocProvider.of<HomeBloc>(context)
-                                        .add(PressBtnUncheckVoiceEvent());
-                                  },
-                                ),
-                              ),
-                            ],
+                        flex: 6,
+                        child: Container(
+                          width: screenWidth * 0.8,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.circular(6.0),
                           ),
-                        ))
+                          padding: EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 12.0,
+                          ),
+                          child: Text(
+                            Utils.resultText,
+                            style: TextStyle(
+                                fontSize: 15.0, fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                    Flexible(
+                      flex: 2,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.mic,
+                          color: Colors.blueAccent,
+                          size: 40,
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<HomeBloc>(context)
+                              .add(PressBtnCheckVoiceEvent(context: context));
+                        },
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Colors.red,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<HomeBloc>(context)
+                              .add(PressBtnUncheckVoiceEvent());
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -217,29 +248,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget giaoDienChung() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-        child: Container(
-          color: Colors.blue[50],
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 10.0),
-                StateHomePage(),
-                YardGatePage(),
-                LivingRoomPage(),
-                BedroomPage(),
-                KitchenPage(),
-                BathroomPage(),
-                const SizedBox(height: 50.0),
-              ],
-            ),
-          ),
-        ),
-      ),
+  Widget thongBao(double screenWidth, screenHeight) {
+    return Container(
+      height: screenHeight * 0.1,
+      child: Utils.voiceListen
+          ? ConnectionStatusBar(
+              height: screenHeight * 0.05,
+              width: screenWidth,
+              color: Colors.greenAccent,
+              endOffset: const Offset(0.0, 0.0),
+              beginOffset: const Offset(0.0, -1.0),
+              animationDuration: Duration(microseconds: 200),
+              title: Text("You can say",
+                  style: TextStyle(color: Colors.white, fontSize: 14)),
+            )
+          : Container(color: Colors.transparent),
     );
   }
 }

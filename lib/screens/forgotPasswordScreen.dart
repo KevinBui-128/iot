@@ -5,6 +5,8 @@ import 'package:du_an_iot/streams/registerStream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:du_an_iot/screens/widgets/qrScreen.dart';
+
 class ForgotPasswordPage extends StatefulWidget {
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
@@ -55,6 +57,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   Widget bodyPage(double screenWidth, screenHeight) {
+    String screen = "forgot";
     return Scaffold(
       key: forgotPassKey,
       body: Container(
@@ -68,24 +71,27 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             children: <Widget>[
               // appbar
               SafeArea(
-                  top: true,
-                  left: true,
-                  right: true,
+                top: true,
+                left: true,
+                right: true,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     width: screenWidth * 0.1,
                     height: screenWidth * 0.1,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.red),
                         borderRadius: BorderRadius.circular(32)),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        }),
-                  )),
+                    child: Center(
+                        child: Icon(
+                      Icons.clear,
+                      color: Colors.red,
+                    )),
+                  ),
+                ),
+              ),
               SizedBox(height: screenHeight * 0.15),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, screenHeight * 0.02),
@@ -151,7 +157,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => QrScreen(screen)));
+                },
                 child: Container(
                     padding: EdgeInsets.fromLTRB(
                         0, screenHeight * 0.01, 0, screenHeight * 0.05),
@@ -160,12 +171,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         Text("Check QR", style: TextStyle(fontSize: 15)),
                         SizedBox(width: screenWidth * 0.02),
                         Container(
-                          width: screenWidth * 0.05,
-                          height: screenWidth * 0.05,
+                          width: screenWidth * 0.07,
+                          height: screenWidth * 0.07,
                           decoration: BoxDecoration(border: Border.all()),
-                          child: Utils.checkQRForgot
-                              ? Icon(Icons.done, color: Colors.red, size: 18)
-                              : Container(),
+                          child: Center(
+                            child: Utils.checkQRForgot
+                                ? Icon(Icons.done, color: Colors.red, size: 18)
+                                : Container(),
+                          ),
                         )
                       ],
                     )),

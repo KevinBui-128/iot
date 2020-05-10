@@ -1,4 +1,5 @@
-class Utils{
+class Utils {
+  static String dataQR = "Smart Home IoT Fpt";
   static String resultText = "";
 
   static String nhietDo = "";
@@ -17,6 +18,7 @@ class Utils{
 
   static bool checkQRRegister = true;
   static bool checkQRForgot = true;
+  static bool voiceListen = false;
 
   static bool nguon = false;
   static bool denSan = false;
@@ -30,7 +32,7 @@ class Utils{
   static bool quatNgu = false;
   static bool quatBep = false;
   static bool quatTam = false;
-  
+
   static String titleTrangThaiChung = "General state";
   static String titleSanGara = "Yard - Gara";
   static String titlePhongKhach = "Living room";

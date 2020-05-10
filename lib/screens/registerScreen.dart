@@ -5,6 +5,8 @@ import 'package:du_an_iot/streams/registerStream.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:du_an_iot/screens/widgets/qrScreen.dart';
+
 class RegisterPage extends StatefulWidget {
   double screenWidth;
   double screenHeight;
@@ -16,7 +18,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _email = TextEditingController();
   TextEditingController _pass = TextEditingController();
-  TextEditingController _rePass = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _name = TextEditingController();
   RegisterStream registerStream;
@@ -56,6 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget bodyPage(double screenWidth, screenHeight) {
+    String screen = "register";
     return Scaffold(
       key: registerKey,
       body: Container(
@@ -151,7 +153,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => QrScreen(screen)));
+                },
                 child: Container(
                     padding: EdgeInsets.fromLTRB(
                         0, screenHeight * 0.01, 0, screenHeight * 0.05),
@@ -160,12 +165,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         Text("Check QR", style: TextStyle(fontSize: 15)),
                         SizedBox(width: screenWidth * 0.02),
                         Container(
-                          width: screenWidth * 0.05,
-                          height: screenWidth * 0.05,
+                          width: screenWidth * 0.07,
+                          height: screenWidth * 0.07,
                           decoration: BoxDecoration(border: Border.all()),
-                          child: Utils.checkQRRegister
-                              ? Icon(Icons.done, color: Colors.red, size: 18)
-                              : Container(),
+                          child: Center(
+                            child: Utils.checkQRRegister
+                                ? Icon(Icons.done, color: Colors.red, size: 18)
+                                : Container(),
+                          ),
                         )
                       ],
                     )),

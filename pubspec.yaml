@@ -28,6 +28,9 @@ dependencies:
   shimmer: ^1.1.0
   after_layout: ^1.0.7+2
   permission_handler: ^3.2.0
+  connection_status_bar: ^1.1.2
+  # Qr
+  qr_code_scanner: 0.0.12
   # bloc
   bloc: 4.0.0
   flutter_bloc: 4.0.0

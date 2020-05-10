@@ -1,7 +1,9 @@
 import 'package:du_an_iot/screens/loginScreen.dart';
 import 'package:du_an_iot/screens/registerScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter/services.dart';
 
 class LoginRegisterPage extends StatefulWidget {
   @override
@@ -11,10 +13,46 @@ class LoginRegisterPage extends StatefulWidget {
 class _LoginRegisterPageState extends State<LoginRegisterPage>
     with TickerProviderStateMixin {
   TabController _controller;
+  String _platformVersion = 'vi_VN';
   @override
   void initState() {
     _controller = TabController(length: 2, vsync: this);
+    initPlatformState();
     super.initState();
+  }
+
+  // permision app
+  Future<void> initPlatformState() async {
+    requestPermissionMicrophone();
+    requestPermissionCamera();
+    String platformVersion;
+    try {} on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _platformVersion = platformVersion;
+    });
+  }
+
+  void requestPermissionMicrophone() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.microphone);
+
+    if (permission != PermissionStatus.granted) {
+      await PermissionHandler()
+          .requestPermissions([PermissionGroup.microphone]);
+    }
+  }
+
+  void requestPermissionCamera() async {
+    PermissionStatus permission =
+        await PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
+
+    if (permission != PermissionStatus.granted) {
+      await PermissionHandler().requestPermissions([PermissionGroup.camera]);
+    }
   }
 
   @override
@@ -59,22 +97,22 @@ class _LoginRegisterPageState extends State<LoginRegisterPage>
                                   highlightColor: Color(0xffe100ff),
                                   child: Container(
                                     padding: EdgeInsets.all(16.0),
-                                    // child: Center(
-                                    //   child: Text(
-                                    //     "My things",
-                                    //     style: TextStyle(
-                                    //         fontSize: 30,
-                                    //         fontWeight: FontWeight.bold,
-                                    //         fontFamily: 'Pacifico',
-                                    //         shadows: <Shadow>[
-                                    //           Shadow(
-                                    //               blurRadius: 18.0,
-                                    //               color: Colors.black87,
-                                    //               offset: Offset.fromDirection(
-                                    //                   120, 12))
-                                    //         ]),
-                                    //   ),
-                                    // ),
+                                    child: Center(
+                                      child: Text(
+                                        "My things",
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Pacifico',
+                                            shadows: <Shadow>[
+                                              Shadow(
+                                                  blurRadius: 18.0,
+                                                  color: Colors.black87,
+                                                  offset: Offset.fromDirection(
+                                                      120, 12))
+                                            ]),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )),
