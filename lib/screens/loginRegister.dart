@@ -114,7 +114,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage>
                                       child: Text(
                                         "My things",
                                         style: TextStyle(
-                                            fontSize: 35,
+                                            fontSize: 30,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Pacifico',
                                             shadows: <Shadow>[
