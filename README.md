@@ -6,11 +6,11 @@ This is the Mobile part of my group's Smart Home project at FPT Polytechnic.
 
 #### Splash Screen + Login Screen + Register Screen + Forgot Password Screen + QR Screen 
 
-<img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/hello.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/login.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/register.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/forgot password.png" width="200"/><img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/Qr screen.png" width="200"/>
+<img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/hello.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/login.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/register.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/forgot password.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/Qr screen.png" width="200"/>
 
 #### Home Screen
 
-<img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/home1.png" width="200"/><img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/home2.png" width="200"/><img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/home3.png" width="200"/>
+<img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/home1.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/home2.png" width="200"/> <img src="https://raw.githubusercontent.com/devHaiAnh/iot/master/Screenshots/home3.png" width="200"/>
 
 #### Prequisites
 
